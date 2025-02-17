@@ -53,6 +53,21 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    function toggleDarkMode() {
+        document.body.classList.toggle("dark-mode");
+        const isDarkMode = document.body.classList.contains("dark-mode");
+        localStorage.setItem("darkMode", isDarkMode);
+    }
+
+    function applyDarkModePreference() {
+        const isDarkMode = localStorage.getItem("darkMode") === "true";
+        if (isDarkMode) {
+            document.body.classList.add("dark-mode");
+        } else {
+            document.body.classList.remove("dark-mode");
+        }
+    }
+
     function resetSelections() {
         console.log("Resetting selections...");
         Object.keys(layers).forEach(layer => {
@@ -120,10 +135,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    applyDarkModePreference();
+
     setTimeout(() => {
         populateDropdowns();
         document.getElementById("downloadButton").addEventListener("click", downloadImage);
         document.getElementById("shuffleButton").addEventListener("click", shuffleSelection);
         document.getElementById("resetButton").addEventListener("click", resetSelections);
+        document.getElementById("darkModeToggle").addEventListener("click", toggleDarkMode);
     }, 100);
 });
