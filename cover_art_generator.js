@@ -30,13 +30,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-   function updateCanvas() {
+  function updateCanvas() {
     console.log("Updating canvas with selected images...");
 
     const canvas = document.getElementById("finalCanvas");
     if (!canvas) {
         console.error("Canvas element not found!");
-        return; // Prevents null error
+        return;
     }
     
     const ctx = canvas.getContext("2d");
@@ -50,20 +50,39 @@ document.addEventListener("DOMContentLoaded", function () {
         { id: "shirt", required: false }
     ];
 
-    function drawImage(image) {
-        ctx.drawImage(image, 0, 0, 2000, 2000);
+    let loadedImages = 0;
+    let totalImages = layersToDraw.length;
+    let imageObjects = [];
+
+    function drawAllImages() {
+        imageObjects.forEach(img => {
+            ctx.drawImage(img, 0, 0, 2000, 2000);
+        });
     }
 
     layersToDraw.forEach(layer => {
-        const img = document.getElementById(layer.id);
-        if (img && img.src && (layer.required || !img.src.includes("None"))) {
+        const imgElement = document.getElementById(layer.id);
+        if (imgElement && imgElement.src && (layer.required || !imgElement.src.includes("None"))) {
             const image = new Image();
             image.crossOrigin = "anonymous";
-            image.src = img.src;
-            image.onload = () => drawImage(image);
+            image.src = imgElement.src;
+            image.onload = () => {
+                imageObjects.push(image);
+                loadedImages++;
+
+                if (loadedImages === totalImages) {
+                    drawAllImages();
+                }
+            };
+        } else {
+            loadedImages++;
+            if (loadedImages === totalImages) {
+                drawAllImages();
+            }
         }
     });
 }
+
 
 
 function updateLayer(layer, file) {
