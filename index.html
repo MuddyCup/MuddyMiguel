@@ -12,19 +12,7 @@
     <h1>tanboymiguel - palabreo god | Cover Art Studio</h1>
 
     <div class="container">
-        <!-- Canvas - Desktop & Mobile -->
-        <div class="canvas-wrapper">
-            <div class="canvas-container">
-                <canvas id="finalCanvas" width="2000" height="2000"></canvas>
-                <img id="background" class="layer">
-                <img id="miguel" class="layer">
-                <img id="title" class="layer">
-                <img id="lv" class="layer">
-                <img id="shirt" class="layer">
-            </div>
-        </div>
-
-        <!-- Selection Menu (Now on Right for Desktop) -->
+        <!-- Selection Menu (LEFT SIDE on Desktop) -->
         <div class="panel">
             <button id="resetButton">↺</button>
             <button id="shuffleButton">Shuffle</button>
@@ -39,14 +27,26 @@
             <label>Lv: <select id="lvSelect"></select></label>
             <label>Shirt: <select id="shirtSelect"></select></label>
         </div>
-    </div>
 
-    <!-- Settings Panel (Now on Right for Desktop) -->
-    <div class="panel">
-        <h3>Settings</h3>
-        <button id="darkModeToggle">Dark Mode</button>
-        <p id="deviceType">Current Device: Detecting...</p>
-        <button id="switchDeviceButton">Switch to Mobile</button>
+        <!-- Canvas (CENTER on Desktop) -->
+        <div class="canvas-wrapper">
+            <div class="canvas-container">
+                <canvas id="finalCanvas" width="2000" height="2000"></canvas>
+                <img id="background" class="layer">
+                <img id="miguel" class="layer">
+                <img id="title" class="layer">
+                <img id="lv" class="layer">
+                <img id="shirt" class="layer">
+            </div>
+        </div>
+
+        <!-- Settings Panel (RIGHT SIDE on Desktop) -->
+        <div class="panel">
+            <h3>Settings</h3>
+            <button id="darkModeToggle">Dark Mode</button>
+            <p id="deviceType">Current Device: Detecting...</p>
+            <button id="switchDeviceButton">Switch to Mobile</button>
+        </div>
     </div>
 
     <!-- Download & Music Buttons -->
