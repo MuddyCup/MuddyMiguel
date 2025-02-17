@@ -30,85 +30,64 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function updateLayer(layer, file) {
-        const imgElement = document.getElementById(layer);
-        if (file === "None") {
-            imgElement.style.display = "none";
-        } else {
-            imgElement.style.display = "block";
-            imgElement.src = `assets/${layer}/${file}`;
-            imgElement.style.position = "absolute";
-            imgElement.style.top = "50%";
-            imgElement.style.left = "50%";
-            imgElement.style.transform = "translate(-50%, -50%)";
-            imgElement.style.width = "100%";
-            imgElement.style.height = "100%";
-            imgElement.style.maxWidth = "2000px"; 
-            imgElement.style.maxHeight = "2000px"; 
-            imgElement.style.objectFit = "contain";
-        }
-    }
+   function updateCanvas() {
+    console.log("Updating canvas with selected images...");
 
-function downloadImage() {
-    console.log("Generating final image...");
-
-    // Create a new canvas
-    const canvas = document.createElement("canvas");
-    canvas.width = 2000;
-    canvas.height = 2000;
+    const canvas = document.getElementById("finalCanvas");
     const ctx = canvas.getContext("2d");
+    
+    // Clear the canvas before redrawing
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Define layer order (Bottom to Top)
+    // Define layer order: Background → Miguel → Title → LV (if selected) → Shirt (if selected)
     const layersToDraw = [
-        { id: "background", required: true },  // Bottom layer
-        { id: "miguel", required: true },      // Above background
-        { id: "title", required: true },       // Above Miguel
-        { id: "lv", required: false },         // Optional layer above Title
-        { id: "shirt", required: false }       // Optional top-most layer
+        { id: "background", required: true },
+        { id: "miguel", required: true },
+        { id: "title", required: true },
+        { id: "lv", required: false },
+        { id: "shirt", required: false }
     ];
 
     let imagesLoaded = 0;
-    let totalImages = layersToDraw.length;
+    const totalImages = layersToDraw.length;
 
     function drawImage(image) {
         ctx.drawImage(image, 0, 0, 2000, 2000);
         imagesLoaded++;
-        if (imagesLoaded === totalImages) {
-            saveCanvas();
-        }
     }
 
-    function loadImage(layer, src) {
-        if (!src || src.includes("None")) {
-            imagesLoaded++; // Skip if 'None' is selected
-            if (imagesLoaded === totalImages) {
-                saveCanvas();
-            }
-            return;
-        }
-
-        const image = new Image();
-        image.crossOrigin = "anonymous";
-        image.src = src;
-        image.onload = () => drawImage(image);
-    }
-
-    function saveCanvas() {
-        const link = document.createElement("a");
-        link.download = "custom_album_cover.png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-    }
-
-    // Loop through each layer and load the image
     layersToDraw.forEach(layer => {
-        const imgElement = document.getElementById(layer.id);
-        if (imgElement && imgElement.src && (layer.required || !imgElement.src.includes("None"))) {
-            loadImage(layer.id, imgElement.src);
-        } else {
-            imagesLoaded++;
+        const img = document.getElementById(layer.id);
+        if (img && img.src && (layer.required || !img.src.includes("None"))) {
+            const image = new Image();
+            image.crossOrigin = "anonymous";
+            image.src = img.src;
+            image.onload = () => drawImage(image);
         }
     });
+}
+
+function updateLayer(layer, file) {
+    const imgElement = document.getElementById(layer);
+    if (file === "None") {
+        imgElement.style.display = "none";
+    } else {
+        imgElement.style.display = "block";
+        imgElement.src = `assets/${layer}/${file}`;
+    }
+
+    // Re-render the canvas every time an image is changed
+    updateCanvas();
+}
+
+function downloadImage() {
+    console.log("Downloading final merged image...");
+
+    const canvas = document.getElementById("finalCanvas");
+    const link = document.createElement("a");
+    link.download = "custom_album_cover.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
 }
 
 
