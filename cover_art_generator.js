@@ -2,10 +2,10 @@ console.log("Loading latest version of cover_art_generator.js");
 document.addEventListener("DOMContentLoaded", function () {
     const layers = {
         background: ["None", "bg1.png", "bg2.png", "bg3.png", "bg4.png", "bg5.png", "bg6.png", "bg7.png", "bg8.png", "bg9.png", "bg10.png", "bg11.png", "bg12.png", "bg13.png", "bg14.png", "bg15.png", "bg16.png"],
-        miguel: ["None", "miguel1.png", "miguel2.png", "miguel3.png", "miguel4.png", "miguel5.png", "miguel6.png", "miguel7.png", "miguel8.png", "miguel9.png", "miguel10.png", "miguel11.png", "miguel12.png", "miguel13.png", "miguel14.png", "miguel15.png", "miguel16.png"],
-        title: ["None", "title1.png", "title2.png", "title3.png", "title4.png", "title5.png", "title6.png", "title7.png", "title8.png", "title9.png", "title10.png"],
-        lv: ["None", "lv1.png", "lv2.png", "lv3.png", "lv4.png", "lv5.png", "lv6.png", "lv7.png", "lv8.png", "lv9.png", "lv10.png"],
-        shirt: ["None", "shirt1.png", "shirt2.png", "shirt3.png", "shirt4.png", "shirt5.png", "shirt6.png", "shirt7.png", "shirt8.png", "shirt9.png", "shirt10.png"]
+        miguel: ["None", "miguel1.png", "miguel2.png", "miguel3.png", "miguel4.png", "miguel5.png", "miguel6.png", "miguel7.png", "miguel8.png", "miguel9.png", "miguel10.png", "miguel11.png", "miguel12.png", "miguel13.png", "miguel14.png", "miguel15.png"],
+        title: ["None", "title1.png", "title2.png", "title3.png"],
+        lv: ["None", "lv1.png", "lv2.png"],
+        shirt: ["None", "shirt1.png", "shirt2.png"]
     };
 
    function populateDropdowns() {
@@ -39,24 +39,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     
 
-  function updateLayer(layer, file) {
-    const imgElement = document.getElementById(layer);
-
-    if (file === "None") {
-        imgElement.style.display = "none"; // Hide if "None" is selected
-    } else {
-        imgElement.style.display = "block";
-        imgElement.src = `assets/${layer}/${file}`;
-        imgElement.style.width = "2000px"; 
-        imgElement.style.height = "2000px";
-        imgElement.style.position = "absolute";
-        imgElement.style.top = "0px";
-        imgElement.style.left = "0px";
+ function updateLayer(layer, file) {
+        const imgElement = document.getElementById(layer);
+        if (file === "None") {
+            imgElement.style.display = "none";
+        } else {
+            imgElement.style.display = "block";
+            imgElement.src = `assets/${layer}/${file}`;
+            imgElement.style.width = "2000px";
+            imgElement.style.height = "2000px";
+            imgElement.style.position = "absolute";
+            imgElement.style.top = "50%";
+            imgElement.style.left = "50%";
+            imgElement.style.transform = "translate(-50%, -50%)";
+        }
     }
-}
 
 
-    function downloadImage() {
+     function downloadImage() {
         const canvas = document.createElement("canvas");
         canvas.width = 2000;
         canvas.height = 2000;
