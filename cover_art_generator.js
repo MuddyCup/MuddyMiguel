@@ -47,10 +47,13 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
         imgElement.style.display = "block";
         imgElement.src = `assets/${layer}/${file}`;
-        imgElement.style.width = "2000px"; 
-        imgElement.style.height = "2000px";
-        imgElement.style.left = "0";
-        imgElement.style.top = "0";
+        imgElement.style.width = "auto"; 
+        imgElement.style.height = "auto";
+        imgElement.style.maxWidth = "2000px";
+        imgElement.style.maxHeight = "2000px";
+        imgElement.style.position = "absolute";
+        imgElement.style.left = "0px"; // Aligns images to top-left
+        imgElement.style.top = "0px";
     }
 }
 
