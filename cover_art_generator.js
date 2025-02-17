@@ -234,7 +234,19 @@ function toggleMusic() {
         musicButton.textContent = "Play Music";
     }
 }
+function updateDeviceUI() {
+    const deviceTypeElement = document.getElementById("deviceType");
+    const switchButton = document.getElementById("switchDeviceButton");
 
+    if (!deviceTypeElement || !switchButton) {
+        console.error("Device UI elements not found.");
+        return;
+    }
+
+    const currentDevice = detectDevice();
+    deviceTypeElement.textContent = `Current Device: ${currentDevice}`;
+    switchButton.textContent = currentDevice === "Desktop" ? "Switch to Mobile" : "Switch to Desktop";
+}
 // ✅ Make sure the event listener is added inside setTimeout
 setTimeout(() => {
     populateDropdowns();
@@ -248,9 +260,6 @@ setTimeout(() => {
     // 🎵 Add Event Listener for Music Button
     document.getElementById("toggleMusicButton").addEventListener("click", toggleMusic);
   updateDeviceUI(); // Keeps track of current device type
-
-    // 🔹 ADD THIS LINE HERE
-    applyLayout(); // Ensures mobile layout is applied when the page loads
 
 }, 100);
 
