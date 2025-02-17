@@ -73,6 +73,8 @@ document.addEventListener("DOMContentLoaded", function () {
 }
 
 
-    document.getElementById("downloadButton").addEventListener("click", downloadImage);
+   setTimeout(() => {
     populateDropdowns();
-});
+    document.getElementById("downloadButton").addEventListener("click", downloadImage);
+}, 100);
+
