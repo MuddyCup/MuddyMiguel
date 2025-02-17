@@ -102,11 +102,18 @@ function downloadImage() {
     console.log("Downloading final merged image...");
 
     const canvas = document.getElementById("finalCanvas");
-    const link = document.createElement("a");
-    link.download = "custom_album_cover.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
+
+    // 🔹 Ensure the canvas is updated before downloading
+    updateCanvas();
+
+    setTimeout(() => {
+        const link = document.createElement("a");
+        link.download = "custom_album_cover.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    }, 500); // Small delay to ensure all images are drawn
 }
+
 
 
 
