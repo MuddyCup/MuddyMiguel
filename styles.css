@@ -207,7 +207,7 @@ button:hover {
     margin-top: 5px;
 }
 
-/* ✅ MOBILE LAYOUT FIXES (REDUCED CANVAS SIZE TO 2/3) */
+/* ✅ MOBILE LAYOUT FIXES (Canvas size reverted to original) */
 @media screen and (max-width: 768px) {
     .container {
         flex-direction: column; /* Mobile: Stack everything vertically */
@@ -219,10 +219,10 @@ button:hover {
 
     .canvas-wrapper {
         order: 1; /* Canvas is at the TOP */
-        width: 60vw; /* ✅ Reduced to 2/3 of previous size */
-        height: auto; /* Keep aspect ratio */
-        max-width: 350px; /* ✅ Ensures it doesn’t get too big */
-        max-height: 350px;
+        width: 90vw; /* ✅ Full original size restored */
+        height: auto;
+        max-width: 500px; 
+        max-height: 500px;
         margin-bottom: 20px; /* Add space between canvas and menu */
     }
 
