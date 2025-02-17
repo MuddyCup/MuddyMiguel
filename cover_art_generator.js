@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function updateLayer(layer, file) {
+  function updateLayer(layer, file) {
     const imgElement = document.getElementById(layer);
     if (file === "None") {
         imgElement.style.display = "none";
@@ -44,11 +44,15 @@ document.addEventListener("DOMContentLoaded", function () {
         imgElement.style.position = "absolute";
         imgElement.style.top = "50%";
         imgElement.style.left = "50%";
-        imgElement.style.transform = "translate(-50%, -50%)"; // Centers image
-        imgElement.style.width = "2000px";
-        imgElement.style.height = "2000px";
+        imgElement.style.transform = "translate(-50%, -50%)";
+        imgElement.style.width = "100%";
+        imgElement.style.height = "100%";
+        imgElement.style.maxWidth = "2000px"; 
+        imgElement.style.maxHeight = "2000px"; 
+        imgElement.style.objectFit = "contain"; // Ensures scaling fits canvas without distortion
     }
 }
+
 
 
     function downloadImage() {
