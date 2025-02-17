@@ -30,23 +30,43 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function downloadImage() {
-        const canvas = document.createElement("canvas");
-        canvas.width = 2000;
-        canvas.height = 2000;
-        const ctx = canvas.getContext("2d");
+    const canvas = document.createElement("canvas");
+    canvas.width = 2000;  // Ensures the correct width
+    canvas.height = 2000; // Ensures the correct height
+    const ctx = canvas.getContext("2d");
 
-        let imagesLoaded = 0;
-        const totalImages = Object.keys(layers).length;
+    let imagesLoaded = 0;
+    const totalImages = Object.keys(layers).length;
 
-        function drawImage(img, callback) {
-            const image = new Image();
-            image.crossOrigin = "anonymous";
-            image.src = img.src;
-            image.onload = () => {
-                ctx.drawImage(image, 0, 0, 2000, 2000);
-                callback();
-            };
+    function drawImage(img, callback) {
+        const image = new Image();
+        image.crossOrigin = "anonymous";
+        image.src = img.src;
+        image.onload = () => {
+            ctx.drawImage(image, 0, 0, 2000, 2000); // Draws image correctly
+            callback();
+        };
+    }
+
+    function checkCompletion() {
+        imagesLoaded++;
+        if (imagesLoaded === totalImages) {
+            const link = document.createElement("a");
+            link.download = "custom_album_cover.png";
+            link.href = canvas.toDataURL("image/png");
+            link.click();
         }
+    }
+
+    Object.keys(layers).forEach(layer => {
+        const img = document.getElementById(layer);
+        if (img.src && img.src !== window.location.href) {
+            drawImage(img, checkCompletion);
+        } else {
+            imagesLoaded++;
+        }
+    });
+}
 
         function checkCompletion() {
             imagesLoaded++;
