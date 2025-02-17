@@ -203,15 +203,32 @@ function downloadImage() {
         alert("Refreshing the page to simulate a real mode switch.");
         location.reload();
     }
+// 🎵 Function to Play/Pause Music
+function toggleMusic() {
+    const music = document.getElementById("backgroundMusic");
+    const musicButton = document.getElementById("toggleMusicButton");
 
-    setTimeout(() => {
-        populateDropdowns();
-        document.getElementById("downloadButton").addEventListener("click", downloadImage);
-        document.getElementById("shuffleButton").addEventListener("click", shuffleSelection);
-        document.getElementById("resetButton").addEventListener("click", resetSelections);
-        document.getElementById("darkModeToggle").addEventListener("click", toggleDarkMode);
-        document.getElementById("infoButton").addEventListener("click", toggleInfoSection);
-        document.getElementById("switchDeviceButton").addEventListener("click", toggleDeviceMode);
-        updateDeviceUI();
-    }, 100);
-});
+    if (music.paused) {
+        music.play();
+        musicButton.textContent = "Pause Music";
+    } else {
+        music.pause();
+        musicButton.textContent = "Play Music";
+    }
+}
+
+// ✅ Make sure the event listener is added inside setTimeout
+setTimeout(() => {
+    populateDropdowns();
+    document.getElementById("downloadButton").addEventListener("click", downloadImage);
+    document.getElementById("shuffleButton").addEventListener("click", shuffleSelection);
+    document.getElementById("resetButton").addEventListener("click", resetSelections);
+    document.getElementById("darkModeToggle").addEventListener("click", toggleDarkMode);
+    document.getElementById("infoButton").addEventListener("click", toggleInfoSection);
+    document.getElementById("switchDeviceButton").addEventListener("click", toggleDeviceMode);
+
+    // 🎵 Add Event Listener for Music Button
+    document.getElementById("toggleMusicButton").addEventListener("click", toggleMusic);
+
+    updateDeviceUI();
+}, 100);
