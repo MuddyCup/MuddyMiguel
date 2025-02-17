@@ -192,7 +192,7 @@ function toggleInfoSection() {
         const img = document.getElementById(layer);
         loadImage(layer, img.src, index);
     });
-}
+
 
 
     applyDarkModePreference();
