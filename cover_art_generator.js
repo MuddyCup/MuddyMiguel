@@ -200,3 +200,22 @@ setTimeout(() => {
 }, 100);
     });  // ✅ Closes the `DOMContentLoaded` event listener
 
+function toggleMusic() {
+    const audio = document.getElementById("backgroundMusic");
+    const button = document.getElementById("toggleMusicButton");
+
+    if (audio.paused) {
+        audio.play();
+        button.textContent = "Pause Music";
+    } else {
+        audio.pause();
+        button.textContent = "Play Music";
+    }
+}
+
+// Ensure the music button works after page loads
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("toggleMusicButton").addEventListener("click", toggleMusic);
+});
+
+
