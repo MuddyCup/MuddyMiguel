@@ -181,14 +181,27 @@ function detectDevice() {
 
 function applyLayout() {
     const container = document.querySelector(".container");
+    const canvas = document.getElementById("finalCanvas");
     const deviceType = detectDevice();
 
     if (deviceType === "Mobile") {
-        container.classList.add("mobile-layout"); // Apply mobile layout
+        container.classList.add("mobile-layout"); // Apply vertical layout
+
+        // 🔹 Make sure the canvas resizes dynamically
+        canvas.style.width = "90vw";
+        canvas.style.height = "90vw";
+        canvas.style.maxWidth = "500px";
+        canvas.style.maxHeight = "500px";
+
     } else {
         container.classList.remove("mobile-layout"); // Keep desktop layout
+
+        // 🔹 Restore the original canvas size for desktop
+        canvas.style.width = "500px";
+        canvas.style.height = "500px";
     }
 }
+
 
 
   function toggleDeviceMode() {
