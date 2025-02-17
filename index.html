@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>tanboymiguel - palabreo god | Cover Art Studio</title>
+    <link rel="icon" type="image/png" href="assets/favicon/favicon.png">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,6 +23,16 @@
             align-items: center;
             justify-content: center;
             gap: 20px;
+        }
+        .canvas-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border: 2px solid #000;
+            border-radius: 10px;
+            background-color: #f8f8f8;
+            transition: border-color 0.3s, background-color 0.3s;
         }
         .canvas-container {
             position: relative;
@@ -49,6 +60,34 @@
             align-items: flex-end;
             gap: 10px;
         }
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .toggle-label {
+            font-weight: bold;
+        }
+        .slider {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+        .slider input {
+            display: none;
+        }
+        .slider .track {
+            width: 100%;
+            height: 100%;
+            background-color: #ccc;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+        }
+        .slider input:checked + .track {
+            background-color: #000;
+        }
         .download-btn {
             margin-top: 10px;
             padding: 10px;
@@ -61,12 +100,27 @@
         .download-btn:hover {
             background-color: #444;
         }
+        .info-section {
+            margin-top: 10px;
+            width: 500px;
+            cursor: pointer;
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: center;
+            background-color: #f1f1f1;
+        }
+        .info-content {
+            display: none;
+            padding: 10px;
+            border-top: 1px solid #000;
+        }
         .dark-mode {
             background-color: #000;
             color: #fff;
         }
-        .dark-mode .canvas-container {
+        .dark-mode .canvas-container, .dark-mode .canvas-wrapper {
             border-color: #fff;
+            background-color: #333;
         }
         .dark-mode .download-btn {
             background-color: #fff;
@@ -74,14 +128,6 @@
         }
         .dark-mode .download-btn:hover {
             background-color: #bbb;
-        }
-        @media (max-width: 600px) {
-            .container {
-                flex-direction: column;
-            }
-            .settings {
-                align-items: center;
-            }
         }
     </style>
 </head>
@@ -95,95 +141,45 @@
             <label>Lv: <select id="lvSelect"></select></label>
             <label>Shirt: <select id="shirtSelect"></select></label>
         </div>
-        <div class="canvas-container">
-            <img id="background" class="layer">
-            <img id="miguel" class="layer">
-            <img id="title" class="layer">
-            <img id="lv" class="layer">
-            <img id="shirt" class="layer">
+        <div class="canvas-wrapper">
+            <div class="canvas-container">
+                <img id="background" class="layer">
+                <img id="miguel" class="layer">
+                <img id="title" class="layer">
+                <img id="lv" class="layer">
+                <img id="shirt" class="layer">
+            </div>
         </div>
         <div class="settings">
-            <label>Dark Mode <input type="checkbox" id="darkModeToggle"></label>
-            <label>Mobile Mode <input type="checkbox" id="mobileModeToggle"></label>
+            <div class="toggle-container">
+                <span class="toggle-label">Light Mode</span>
+                <label class="slider">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="track"></span>
+                </label>
+                <span class="toggle-label">Dark Mode</span>
+            </div>
+            <div class="toggle-container">
+                <span class="toggle-label">Desktop</span>
+                <label class="slider">
+                    <input type="checkbox" id="mobileModeToggle">
+                    <span class="track"></span>
+                </label>
+                <span class="toggle-label">Mobile</span>
+            </div>
         </div>
     </div>
     <button class="download-btn" onclick="downloadImage()">Download</button>
+    <div class="info-section" onclick="toggleInfo()">Info & Instructions
+        <div class="info-content" id="infoContent">
+            <p>Welcome to the Cover Art Studio! Here you can select different elements to generate a custom album cover. Choose your background, Miguel version, title, and more. Once satisfied, click 'Download' to save your final cover!</p>
+        </div>
+    </div>
     <script>
-        const layers = ['background', 'miguel', 'title', 'lv', 'shirt'];
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        const mobileModeToggle = document.getElementById('mobileModeToggle');
-        
-        function loadOptions() {
-            layers.forEach(layer => {
-                fetch(`assets/${layer}/`)
-                    .then(response => response.text())
-                    .then(text => {
-                        const parser = new DOMParser();
-                        const htmlDoc = parser.parseFromString(text, 'text/html');
-                        const options = Array.from(htmlDoc.querySelectorAll('a'))
-                            .map(link => link.href.split('/').pop())
-                            .filter(name => name.endsWith('.png'));
-                        
-                        const select = document.getElementById(`${layer}Select`);
-                        options.forEach(option => {
-                            let opt = document.createElement('option');
-                            opt.value = option;
-                            opt.innerText = option;
-                            select.appendChild(opt);
-                        });
-                        
-                        select.addEventListener('change', () => updateLayer(layer, select.value));
-                    });
-            });
+        function toggleInfo() {
+            const info = document.getElementById("infoContent");
+            info.style.display = info.style.display === "block" ? "none" : "block";
         }
-        
-        function updateLayer(layer, file) {
-            document.getElementById(layer).src = `assets/${layer}/${file}`;
-        }
-        
-        function downloadImage() {
-            const canvas = document.createElement('canvas');
-            canvas.width = 500;
-            canvas.height = 500;
-            const ctx = canvas.getContext('2d');
-            let imagesLoaded = 0;
-            let totalImages = layers.length;
-            
-            function drawImage(img, callback) {
-                const image = new Image();
-                image.crossOrigin = "anonymous";
-                image.src = img.src;
-                image.onload = () => {
-                    ctx.drawImage(image, 0, 0, 500, 500);
-                    callback();
-                };
-            }
-            
-            function checkCompletion() {
-                imagesLoaded++;
-                if (imagesLoaded === totalImages) {
-                    const link = document.createElement('a');
-                    link.download = 'custom_album_cover.png';
-                    link.href = canvas.toDataURL("image/png");
-                    link.click();
-                }
-            }
-            
-            layers.forEach(layer => {
-                const img = document.getElementById(layer);
-                if (img.src && img.src !== window.location.href) {
-                    drawImage(img, checkCompletion);
-                } else {
-                    totalImages--;
-                }
-            });
-        }
-        
-        darkModeToggle.addEventListener('change', () => {
-            document.body.classList.toggle('dark-mode', darkModeToggle.checked);
-        });
-        
-        loadOptions();
     </script>
 </body>
 </html>
