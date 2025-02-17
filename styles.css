@@ -14,13 +14,24 @@ body {
 }
 
 /* Layout Containers */
-.container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
+.canvas-container {
+    position: relative;
+    width: 2000px;
+    height: 2000px;
+    border: 2px solid #000;
+    background-color: white;
+    overflow: hidden;
 }
+
+.layer {
+    position: absolute;
+    width: 2000px; /* Forces correct width */
+    height: 2000px; /* Forces correct height */
+    object-fit: none; /* Prevents unwanted stretching */
+    top: 0;
+    left: 0;
+}
+
 
 .canvas-wrapper {
     display: flex;
