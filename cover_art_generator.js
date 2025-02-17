@@ -174,35 +174,40 @@ function downloadImage() {
 }
 
 
-    function detectDevice() {
-        const userAgent = navigator.userAgent.toLowerCase();
-        return /mobile|android|iphone|ipad|tablet/.test(userAgent) ? "Mobile" : "Desktop";
+function detectDevice() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    return /mobile|android|iphone|ipad|tablet/.test(userAgent) ? "Mobile" : "Desktop";
+}
+
+function applyLayout() {
+    const container = document.querySelector(".container");
+    const deviceType = detectDevice();
+
+    if (deviceType === "Mobile") {
+        container.classList.add("mobile-layout"); // Apply mobile layout
+    } else {
+        container.classList.remove("mobile-layout"); // Keep desktop layout
+    }
+}
+
+
+  function toggleDeviceMode() {
+    const deviceTypeElement = document.getElementById("deviceType");
+    const switchButton = document.getElementById("switchDeviceButton");
+
+    if (switchButton.textContent.includes("Mobile")) {
+        switchButton.textContent = "Switch to Desktop";
+        deviceTypeElement.textContent = "Current Device: Mobile";
+        document.querySelector(".container").classList.add("mobile-layout");
+    } else {
+        switchButton.textContent = "Switch to Mobile";
+        deviceTypeElement.textContent = "Current Device: Desktop";
+        document.querySelector(".container").classList.remove("mobile-layout");
     }
 
-    function updateDeviceUI() {
-        const deviceTypeElement = document.getElementById("deviceType");
-        const switchButton = document.getElementById("switchDeviceButton");
+    applyLayout();
+}
 
-        const currentDevice = detectDevice();
-        deviceTypeElement.textContent = `Current Device: ${currentDevice}`;
-        switchButton.textContent = currentDevice === "Desktop" ? "Switch to Mobile" : "Switch to Desktop";
-    }
-
-    function toggleDeviceMode() {
-        const deviceTypeElement = document.getElementById("deviceType");
-        const switchButton = document.getElementById("switchDeviceButton");
-
-        if (switchButton.textContent.includes("Mobile")) {
-            switchButton.textContent = "Switch to Desktop";
-            deviceTypeElement.textContent = "Current Device: Mobile";
-        } else {
-            switchButton.textContent = "Switch to Mobile";
-            deviceTypeElement.textContent = "Current Device: Desktop";
-        }
-
-        alert("Refreshing the page to simulate a real mode switch.");
-        location.reload();
-    }
 // 🎵 Function to Play/Pause Music
 function toggleMusic() {
     const music = document.getElementById("backgroundMusic");
@@ -229,8 +234,11 @@ setTimeout(() => {
 
     // 🎵 Add Event Listener for Music Button
     document.getElementById("toggleMusicButton").addEventListener("click", toggleMusic);
+  updateDeviceUI(); // Keeps track of current device type
 
-    updateDeviceUI();
+    // 🔹 ADD THIS LINE HERE
+    applyLayout(); // Ensures mobile layout is applied when the page loads
+
 }, 100);
 
                           });
