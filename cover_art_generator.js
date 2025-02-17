@@ -1,12 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
     // Define available options for each layer
-    const layerOptions = {
-        background: ["bg1.png", "bg2.png", "bg3.png"], // Add your background images here
-        miguel: ["miguel1.png", "miguel2.png"],       // Add your miguel images here
-        title: ["title1.png", "title2.png"],          // Add your title images here
-        lv: ["lv1.png", "lv2.png"],                  // Add your lv images here
-        shirt: ["shirt1.png", "shirt2.png"]           // Add your shirt images here
-    };
+    const layers = {
+    background: [
+        "bg1.png", "bg2.png", "bg3.png", "bg4.png", "bg5.png",
+        "bg6.png", "bg7.png", "bg8.png", "bg9.png", "bg10.png",
+        "bg11.png", "bg12.png", "bg13.png", "bg14.png", "bg15.png",
+        "bg16.png", "bg17.png"
+    ],
+    miguel: [
+        "miguel1.png", "miguel2.png", "miguel3.png", "miguel4.png", "miguel5.png",
+        "miguel6.png", "miguel7.png", "miguel8.png", "miguel9.png", "miguel10.png",
+        "miguel11.png", "miguel12.png", "miguel13.png", "miguel14.png", "miguel15.png",
+        "miguel16.png"
+    ],
+    title: [
+        "title1.png", "title2.png", "title3.png"
+    ],
+    lv: [
+        "lv1.png", "lv2.png"
+    ],
+    shirt: [
+        "shirt1.png", "shirt2.png"
+    ]
+};
 
     // Function to populate dropdowns
     function populateDropdowns() {
