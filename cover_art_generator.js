@@ -166,14 +166,15 @@ function toggleInfoSection() {
         link.click();
     }
 
-    layersToLoad.forEach(({ id, required }) => {
-        const img = document.getElementById(id);
-        if (img && img.src && (required || !img.src.includes("None"))) {
-            loadImage(id, img.src);
-        } else {
-            imagesLoaded++;
-        }
-    });
+  layersToLoad.forEach(layer => {
+    const img = document.getElementById(layer.id);
+    if (img && img.src && (layer.required || !img.src.includes("None"))) {
+        loadImage(layer.id, img.src);
+    } else {
+        imagesLoaded++;
+    }
+});
+
 }
 
 
