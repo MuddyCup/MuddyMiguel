@@ -43,14 +43,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const imgElement = document.getElementById(layer);
 
     if (file === "None") {
-        imgElement.style.display = "none"; // Hide if "None" is selected
+        imgElement.style.display = "none";
     } else {
         imgElement.style.display = "block";
         imgElement.src = `assets/${layer}/${file}`;
-        imgElement.style.width = "auto"; 
-        imgElement.style.height = "auto";
-        imgElement.style.maxWidth = "2000px";
-        imgElement.style.maxHeight = "2000px";
+        imgElement.style.width = "2000px";
+        imgElement.style.height = "2000px";
+        imgElement.style.position = "absolute";
+        imgElement.style.top = "0px";
+        imgElement.style.left = "0px";
     }
 }
 
