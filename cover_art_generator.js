@@ -166,8 +166,7 @@ function toggleInfoSection() {
         link.click();
     }
 
-  layersToLoad.forEach(layer => {
-   layersToLoad.forEach(layer => {
+ layersToLoad.forEach(layer => {
     const img = document.getElementById(layer.id);
 
     // ✅ Check if the image element exists before accessing `.src`
@@ -184,14 +183,6 @@ function toggleInfoSection() {
     }
 });
 
-
-
-
-    // Load each image in order
-    layersToLoad.forEach((layer, index) => {
-        const img = document.getElementById(layer);
-        loadImage(layer, img.src, index);
-    });
 
 
 
@@ -256,6 +247,21 @@ function toggleMusic() {
 // Ensure the music button works after page loads
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("toggleMusicButton").addEventListener("click", toggleMusic);
+layersToLoad.forEach(layer => {
+    const img = document.getElementById(layer.id);
+
+    // ✅ Check if the image element exists before accessing `.src`
+    if (!img) {
+        console.error(`Element with ID '${layer.id}' not found.`);
+        imagesLoaded++;
+        return;
+    }
+
+    if (img.src && (layer.required || !img.src.includes("None"))) {
+        loadImage(layer.id, img.src);
+    } else {
+        imagesLoaded++;
+    }
 });
-}
+
 
