@@ -1,26 +1,29 @@
 document.addEventListener("DOMContentLoaded", function () {
     const layers = {
-        background: ["None", "bg1.png", "bg2.png", "bg3.png"],
-        miguel: ["None", "miguel1.png", "miguel2.png"],
-        title: ["None", "title1.png", "title2.png"],
-        lv: ["None", "lv1.png", "lv2.png"],
-        shirt: ["None", "shirt1.png", "shirt2.png"]
+        background: ["None", "bg1.png", "bg2.png", "bg3.png", "bg4.png", "bg5.png", "bg6.png", "bg7.png", "bg8.png", "bg9.png", "bg10.png", "bg11.png", "bg12.png", "bg13.png", "bg14.png", "bg15.png", "bg16.png", "bg17.png"],
+        miguel: ["None", "miguel1.png", "miguel2.png", "miguel3.png", "miguel4.png", "miguel5.png", "miguel6.png", "miguel7.png", "miguel8.png", "miguel9.png", "miguel10.png", "miguel11.png", "miguel12.png", "miguel13.png", "miguel14.png", "miguel15.png", "miguel16.png"],
+        title: ["None", "title1.png", "title2.png", "title3.png", "title4.png", "title5.png", "title6.png", "title7.png", "title8.png", "title9.png", "title10.png"],
+        lv: ["None", "lv1.png", "lv2.png", "lv3.png", "lv4.png", "lv5.png", "lv6.png", "lv7.png", "lv8.png", "lv9.png", "lv10.png"],
+        shirt: ["None", "shirt1.png", "shirt2.png", "shirt3.png", "shirt4.png", "shirt5.png", "shirt6.png", "shirt7.png", "shirt8.png", "shirt9.png", "shirt10.png"]
     };
 
-    function populateDropdowns() {
+
+   function populateDropdowns() {
         Object.keys(layers).forEach(layer => {
             const selectElement = document.getElementById(`${layer}Select`);
+            console.log(`Populating ${layer} with options:`, layers[layer]); // Debugging
+
             layers[layer].forEach(file => {
                 let option = document.createElement("option");
                 option.value = file;
                 option.textContent = file;
                 selectElement.appendChild(option);
             });
+
             selectElement.addEventListener("change", () => updateLayer(layer, selectElement.value));
         });
     }
-
-    function updateLayer(layer, file) {
+     function updateLayer(layer, file) {
         const imgElement = document.getElementById(layer);
         if (file === "None") {
             imgElement.src = ""; // Remove the image if 'None' is selected
@@ -28,6 +31,11 @@ document.addEventListener("DOMContentLoaded", function () {
             imgElement.src = `assets/${layer}/${file}`;
         }
     }
+
+    document.getElementById("downloadButton").addEventListener("click", downloadImage);
+    populateDropdowns();
+});
+
 
     function downloadImage() {
     const canvas = document.createElement("canvas");
