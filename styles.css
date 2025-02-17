@@ -198,3 +198,16 @@ button:hover {
     text-align: center;
     color: #333;
 }
+
+.dark-mode #shuffleButton,
+.dark-mode #resetButton {
+    background-color: #fff !important;
+    color: #000 !important;
+}
+
+.light-mode #shuffleButton,
+.light-mode #resetButton {
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
