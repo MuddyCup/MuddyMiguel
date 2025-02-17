@@ -175,7 +175,7 @@ function toggleInfoSection() {
     }
 });
 
-}
+
 
 
     // Load each image in order
