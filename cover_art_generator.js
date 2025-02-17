@@ -126,25 +126,31 @@ function toggleInfoSection() {
 
     const layersToLoad = ["background", "miguel", "title", "lv", "shirt"]; // Ordered from bottom to top
     let imagesLoaded = 0;
+    let totalImages = 0;
+    const imageElements = [];
 
-    function drawImage(img, callback) {
-        if (img && img.src && img.style.display !== "none") {
-            const image = new Image();
-            image.crossOrigin = "anonymous";
-            image.src = img.src;
-            image.onload = () => {
-                ctx.drawImage(image, 0, 0, 2000, 2000); // Ensures each layer is drawn at full size
-                imagesLoaded++;
-                if (imagesLoaded === layersToLoad.length) {
-                    saveCanvas();
-                }
-            };
-        } else {
-            imagesLoaded++;
-            if (imagesLoaded === layersToLoad.length) {
+    function drawImage(image, layerIndex) {
+        ctx.drawImage(image, 0, 0, 2000, 2000);
+        imagesLoaded++;
+        if (imagesLoaded === totalImages) {
+            saveCanvas();
+        }
+    }
+
+    function loadImage(layer, src, layerIndex) {
+        if (!src || src.includes("None")) {
+            imagesLoaded++; // Skip empty selections
+            if (imagesLoaded === totalImages) {
                 saveCanvas();
             }
+            return;
         }
+        
+        const image = new Image();
+        image.crossOrigin = "anonymous";
+        image.src = src;
+        image.onload = () => drawImage(image, layerIndex);
+        imageElements.push(image);
     }
 
     function saveCanvas() {
@@ -154,9 +160,18 @@ function toggleInfoSection() {
         link.click();
     }
 
+    // Count valid images to load
     layersToLoad.forEach(layer => {
         const img = document.getElementById(layer);
-        drawImage(img);
+        if (img && img.src && !img.src.includes("None")) {
+            totalImages++;
+        }
+    });
+
+    // Load each image in order
+    layersToLoad.forEach((layer, index) => {
+        const img = document.getElementById(layer);
+        loadImage(layer, img.src, index);
     });
 }
 
