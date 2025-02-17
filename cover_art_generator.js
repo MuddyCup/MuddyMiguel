@@ -25,17 +25,22 @@ document.addEventListener("DOMContentLoaded", function () {
 };
 
     // Function to populate dropdowns
-    function populateDropdowns() {
-        for (const [layer, options] of Object.entries(layerOptions)) {
-            const selectElement = document.getElementById(`${layer}Select`);
-            options.forEach(option => {
-                const opt = document.createElement("option");
-                opt.value = option;
-                opt.textContent = option;
-                selectElement.appendChild(opt);
-            });
-            // Set event listener for change
-            selectElement.addEventListener("change", () => updateLayer(layer, selectElement.value));
+  function populateDropdowns() {
+    Object.keys(layers).forEach(layer => {
+        const selectElement = document.getElementById(`${layer}Select`);
+        console.log(`Populating ${layer} with options:`, layers[layer]); // Debugging
+
+        layers[layer].forEach(file => {
+            let option = document.createElement("option");
+            option.value = file;
+            option.textContent = file;
+            selectElement.appendChild(option);
+        });
+
+        selectElement.addEventListener("change", () => updateLayer(layer, selectElement.value));
+    });
+}
+
         }
     }
 
