@@ -2,9 +2,9 @@ console.log("Loading latest version of cover_art_generator.js");
 
 document.addEventListener("DOMContentLoaded", function () {
     const layers = {
-        background: ["None", "bg1.png", "bg2.png", "bg3.png", "bg4.png", "bg5.png", "bg6.png", "bg7.png", "bg8.png", "bg9.png", "bg10.png", "bg11.png", "bg12.png", "bg13.png", "bg14.png", "bg15.png", "bg16.png"],
-        miguel: ["None", "miguel1.png", "miguel2.png", "miguel3.png", "miguel4.png", "miguel5.png", "miguel6.png", "miguel7.png", "miguel8.png", "miguel9.png", "miguel10.png", "miguel11.png", "miguel12.png", "miguel13.png", "miguel14.png", "miguel15.png"],
-        title: ["None", "title1.png", "title2.png", "title3.png"],
+        background: ["bg1.png", "bg2.png", "bg3.png", "bg4.png", "bg5.png", "bg6.png", "bg7.png", "bg8.png", "bg9.png", "bg10.png", "bg11.png", "bg12.png", "bg13.png", "bg14.png", "bg15.png", "bg16.png"],
+        miguel: ["miguel1.png", "miguel2.png", "miguel3.png", "miguel4.png", "miguel5.png", "miguel6.png", "miguel7.png", "miguel8.png", "miguel9.png", "miguel10.png", "miguel11.png", "miguel12.png", "miguel13.png", "miguel14.png", "miguel15.png"],
+        title: ["title1.png", "title2.png", "title3.png"],
         lv: ["None", "lv1.png", "lv2.png"],
         shirt: ["None", "shirt1.png", "shirt2.png"]
     };
@@ -34,26 +34,42 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-  function updateLayer(layer, file) {
-    const imgElement = document.getElementById(layer);
-    if (file === "None") {
-        imgElement.style.display = "none";
-    } else {
-        imgElement.style.display = "block";
-        imgElement.src = `assets/${layer}/${file}`;
-        imgElement.style.position = "absolute";
-        imgElement.style.top = "50%";
-        imgElement.style.left = "50%";
-        imgElement.style.transform = "translate(-50%, -50%)";
-        imgElement.style.width = "100%";
-        imgElement.style.height = "100%";
-        imgElement.style.maxWidth = "2000px"; 
-        imgElement.style.maxHeight = "2000px"; 
-        imgElement.style.objectFit = "contain"; // Ensures scaling fits canvas without distortion
+    function updateLayer(layer, file) {
+        const imgElement = document.getElementById(layer);
+        if (file === "None") {
+            imgElement.style.display = "none";
+        } else {
+            imgElement.style.display = "block";
+            imgElement.src = `assets/${layer}/${file}`;
+            imgElement.style.position = "absolute";
+            imgElement.style.top = "50%";
+            imgElement.style.left = "50%";
+            imgElement.style.transform = "translate(-50%, -50%)";
+            imgElement.style.width = "100%";
+            imgElement.style.height = "100%";
+            imgElement.style.maxWidth = "2000px"; 
+            imgElement.style.maxHeight = "2000px"; 
+            imgElement.style.objectFit = "contain";
+        }
     }
-}
 
-
+    function shuffleSelection() {
+        console.log("Shuffling selections...");
+        Object.keys(layers).forEach(layer => {
+            const selectElement = document.getElementById(`${layer}Select`);
+            if (!selectElement) return;
+            
+            let availableOptions = layers[layer];
+            if (layer === "lv" || layer === "shirt") {
+                // These layers can select 'None'
+                selectElement.value = availableOptions[Math.floor(Math.random() * availableOptions.length)];
+            } else {
+                // Ensure 'None' is not selected for other layers
+                selectElement.value = availableOptions[Math.floor(Math.random() * (availableOptions.length - 1)) + 1];
+            }
+            updateLayer(layer, selectElement.value);
+        });
+    }
 
     function downloadImage() {
         console.log("Downloading image...");
@@ -97,5 +113,6 @@ document.addEventListener("DOMContentLoaded", function () {
     setTimeout(() => {
         populateDropdowns();
         document.getElementById("downloadButton").addEventListener("click", downloadImage);
+        document.getElementById("shuffleButton").addEventListener("click", shuffleSelection);
     }, 100);
 });
