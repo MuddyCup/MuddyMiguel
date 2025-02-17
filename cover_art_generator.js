@@ -7,21 +7,17 @@ document.addEventListener("DOMContentLoaded", function () {
         title: ["title1.png", "title2.png", "title3.png"],
         lv: ["None", "lv1.png", "lv2.png"],
         shirt: ["None", "shirt1.png", "shirt2.png"]
-    }); 
+    };
 
     function populateDropdowns() {
-        console.log("Populating dropdowns..."); // Debugging check
-
+        console.log("Populating dropdowns...");
         Object.keys(layers).forEach(layer => {
             const selectElement = document.getElementById(`${layer}Select`);
-
             if (!selectElement) {
                 console.error(`Dropdown not found for layer: ${layer}`);
                 return;
             }
-
-            console.log(`Adding options to: ${layer}`); // Debugging check
-            selectElement.innerHTML = ""; // Clear existing options before adding new ones
+            selectElement.innerHTML = ""; // Clear existing options
 
             layers[layer].forEach(file => {
                 let option = document.createElement("option");
@@ -53,38 +49,82 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-  function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
-    const isDarkMode = document.body.classList.contains("dark-mode");
-    localStorage.setItem("darkMode", isDarkMode);
-    
-    // Update button text based on mode
-    const darkModeButton = document.getElementById("darkModeToggle");
-    darkModeButton.textContent = isDarkMode ? "Light Mode" : "Dark Mode";
+    function downloadImage() {
+        console.log("Downloading image...");
+        const canvas = document.createElement("canvas");
+        canvas.width = 2000;
+        canvas.height = 2000;
+        const ctx = canvas.getContext("2d");
 
-    // Update shuffle and reset button styles
-    const buttons = document.querySelectorAll("#shuffleButton, #resetButton");
-    buttons.forEach(button => {
-        button.style.backgroundColor = isDarkMode ? "#fff" : "#000";
-        button.style.color = isDarkMode ? "#000" : "#fff";
-    });
-}
-function toggleInfoSection() {
-    const infoContent = document.getElementById("infoContent");
-    if (infoContent) {
-        infoContent.style.display = infoContent.style.display === "none" ? "block" : "none";
+        const layersToLoad = [
+            { id: "background", required: true },
+            { id: "miguel", required: true },
+            { id: "title", required: true },
+            { id: "lv", required: false },
+            { id: "shirt", required: false }
+        ];
+
+        let imagesLoaded = 0;
+        let totalImages = layersToLoad.length;
+
+        function drawImage(image) {
+            ctx.drawImage(image, 0, 0, 2000, 2000);
+            imagesLoaded++;
+            if (imagesLoaded === totalImages) {
+                saveCanvas();
+            }
+        }
+
+        function loadImage(layer, src) {
+            if (!src || src.includes("None")) {
+                imagesLoaded++;
+                if (imagesLoaded === totalImages) {
+                    saveCanvas();
+                }
+                return;
+            }
+            const image = new Image();
+            image.crossOrigin = "anonymous";
+            image.src = src;
+            image.onload = () => drawImage(image);
+        }
+
+        function saveCanvas() {
+            const link = document.createElement("a");
+            link.download = "custom_album_cover.png";
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        }
+
+        layersToLoad.forEach(layer => {
+            const img = document.getElementById(layer.id);
+            if (img && img.src && (layer.required || !img.src.includes("None"))) {
+                loadImage(layer.id, img.src);
+            } else {
+                imagesLoaded++;
+            }
+        });
     }
-}
 
+    function toggleDarkMode() {
+        document.body.classList.toggle("dark-mode");
+        const isDarkMode = document.body.classList.contains("dark-mode");
+        localStorage.setItem("darkMode", isDarkMode);
 
-    function applyDarkModePreference() {
-        const isDarkMode = localStorage.getItem("darkMode") === "true";
-        if (isDarkMode) {
-            document.body.classList.add("dark-mode");
-            document.getElementById("darkModeToggle").textContent = "Light Mode";
-        } else {
-            document.body.classList.remove("dark-mode");
-            document.getElementById("darkModeToggle").textContent = "Dark Mode";
+        const darkModeButton = document.getElementById("darkModeToggle");
+        darkModeButton.textContent = isDarkMode ? "Light Mode" : "Dark Mode";
+
+        const buttons = document.querySelectorAll("#shuffleButton, #resetButton");
+        buttons.forEach(button => {
+            button.style.backgroundColor = isDarkMode ? "#fff" : "#000";
+            button.style.color = isDarkMode ? "#000" : "#fff";
+        });
+    }
+
+    function toggleInfoSection() {
+        const infoContent = document.getElementById("infoContent");
+        if (infoContent) {
+            infoContent.style.display = infoContent.style.display === "none" ? "block" : "none";
         }
     }
 
@@ -106,147 +146,52 @@ function toggleInfoSection() {
             
             let availableOptions = layers[layer];
             if (layer === "lv" || layer === "shirt") {
-                // These layers can select 'None'
                 selectElement.value = availableOptions[Math.floor(Math.random() * availableOptions.length)];
             } else {
-                // Ensure 'None' is not selected for other layers
                 selectElement.value = availableOptions[Math.floor(Math.random() * (availableOptions.length - 1)) + 1];
             }
             updateLayer(layer, selectElement.value);
         });
     }
 
-  function downloadImage() {
-    console.log("Downloading image...");
-
-    const canvas = document.createElement("canvas");
-    canvas.width = 2000;
-    canvas.height = 2000;
-    const ctx = canvas.getContext("2d");
-
-    // Correct order: Background -> Miguel -> Title -> LV -> Shirt
-    const layersToLoad = [
-        { id: "background", required: true },
-        { id: "miguel", required: true },
-        { id: "title", required: true },
-        { id: "lv", required: false },
-        { id: "shirt", required: false }
-    ];
-
-    let imagesLoaded = 0;
-    let totalImages = layersToLoad.length;
-
-    function drawImage(image, callback) {
-        ctx.drawImage(image, 0, 0, 2000, 2000);
-        imagesLoaded++;
-        if (imagesLoaded === totalImages) {
-            saveCanvas();
-        }
+    function detectDevice() {
+        const userAgent = navigator.userAgent.toLowerCase();
+        return /mobile|android|iphone|ipad|tablet/.test(userAgent) ? "Mobile" : "Desktop";
     }
 
-    function loadImage(layer, src) {
-        if (!src || src.includes("None")) {
-            imagesLoaded++; // Skip empty selections
-            if (imagesLoaded === totalImages) {
-                saveCanvas();
-            }
-            return;
+    function updateDeviceUI() {
+        const deviceTypeElement = document.getElementById("deviceType");
+        const switchButton = document.getElementById("switchDeviceButton");
+
+        const currentDevice = detectDevice();
+        deviceTypeElement.textContent = `Current Device: ${currentDevice}`;
+        switchButton.textContent = currentDevice === "Desktop" ? "Switch to Mobile" : "Switch to Desktop";
+    }
+
+    function toggleDeviceMode() {
+        const deviceTypeElement = document.getElementById("deviceType");
+        const switchButton = document.getElementById("switchDeviceButton");
+
+        if (switchButton.textContent.includes("Mobile")) {
+            switchButton.textContent = "Switch to Desktop";
+            deviceTypeElement.textContent = "Current Device: Mobile";
+        } else {
+            switchButton.textContent = "Switch to Mobile";
+            deviceTypeElement.textContent = "Current Device: Desktop";
         }
 
-        const image = new Image();
-        image.crossOrigin = "anonymous";
-        image.src = src;
-        image.onload = () => drawImage(image);
+        alert("Refreshing the page to simulate a real mode switch.");
+        location.reload();
     }
 
-    function saveCanvas() {
-        const link = document.createElement("a");
-        link.download = "custom_album_cover.png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-    }
-
-
-
-
-
-
-    applyDarkModePreference();
-
-   function detectDevice() {
-    const userAgent = navigator.userAgent.toLowerCase();
-    return /mobile|android|iphone|ipad|tablet/.test(userAgent) ? "Mobile" : "Desktop";
-}
-
-function updateDeviceUI() {
-    const deviceTypeElement = document.getElementById("deviceType");
-    const switchButton = document.getElementById("switchDeviceButton");
-
-    const currentDevice = detectDevice();
-    deviceTypeElement.textContent = `Current Device: ${currentDevice}`;
-    switchButton.textContent = currentDevice === "Desktop" ? "Switch to Mobile" : "Switch to Desktop";
-}
-
-function toggleDeviceMode() {
-    const deviceTypeElement = document.getElementById("deviceType");
-    const switchButton = document.getElementById("switchDeviceButton");
-
-    if (switchButton.textContent.includes("Mobile")) {
-        switchButton.textContent = "Switch to Desktop";
-        deviceTypeElement.textContent = "Current Device: Mobile";
-    } else {
-        switchButton.textContent = "Switch to Mobile";
-        deviceTypeElement.textContent = "Current Device: Desktop";
-    }
-
-    alert("Refreshing the page to simulate a real mode switch.");
-    location.reload(); // Simulating a mode switch by refreshing
-}
-
-setTimeout(() => {
-    populateDropdowns();
-    document.getElementById("downloadButton").addEventListener("click", downloadImage);
-    document.getElementById("shuffleButton").addEventListener("click", shuffleSelection);
-    document.getElementById("resetButton").addEventListener("click", resetSelections);
-    document.getElementById("darkModeToggle").addEventListener("click", toggleDarkMode);
-    document.getElementById("infoButton").addEventListener("click", toggleInfoSection);
-    document.getElementById("switchDeviceButton").addEventListener("click", toggleDeviceMode);
-    updateDeviceUI();
-}, 100);  // ✅ Corrected version
-
-    };  // ✅ Closes the `DOMContentLoaded` event listener
-
-function toggleMusic() {
-    const audio = document.getElementById("backgroundMusic");
-    const button = document.getElementById("toggleMusicButton");
-
-    if (audio.paused) {
-        audio.play();
-        button.textContent = "Pause Music";
-    } else {
-        audio.pause();
-        button.textContent = "Play Music";
-    }
-}
-
-// Ensure the music button works after page loads
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("toggleMusicButton").addEventListener("click", toggleMusic);
-layersToLoad.forEach(layer => {
-    const img = document.getElementById(layer.id);
-
-    // ✅ Check if the image element exists before accessing `.src`
-    if (!img) {
-        console.error(`Element with ID '${layer.id}' not found.`);
-        imagesLoaded++;
-        return;
-    }
-
-    if (img.src && (layer.required || !img.src.includes("None"))) {
-        loadImage(layer.id, img.src);
-    } else {
-        imagesLoaded++;
-    }
+    setTimeout(() => {
+        populateDropdowns();
+        document.getElementById("downloadButton").addEventListener("click", downloadImage);
+        document.getElementById("shuffleButton").addEventListener("click", shuffleSelection);
+        document.getElementById("resetButton").addEventListener("click", resetSelections);
+        document.getElementById("darkModeToggle").addEventListener("click", toggleDarkMode);
+        document.getElementById("infoButton").addEventListener("click", toggleInfoSection);
+        document.getElementById("switchDeviceButton").addEventListener("click", toggleDeviceMode);
+        updateDeviceUI();
+    }, 100);
 });
-
-
