@@ -12,10 +12,10 @@
     <h1>tanboymiguel - palabreo god | Cover Art Studio</h1>
 
     <div class="container">
-        <!-- Ensure the canvas is ABOVE the selections in mobile mode -->
+        <!-- Desktop & Mobile Layout Adjustments -->
         <div class="canvas-wrapper">
             <div class="canvas-container">
-                <canvas id="finalCanvas" width="2000" height="2000" style="display: none;"></canvas>
+                <canvas id="finalCanvas" width="2000" height="2000"></canvas>
                 <img id="background" class="layer">
                 <img id="miguel" class="layer">
                 <img id="title" class="layer">
@@ -24,38 +24,32 @@
             </div>
         </div>
 
+        <!-- Selection Menu -->
         <div class="panel">
-            <!-- Reset Button -->
             <button id="resetButton">↺</button>
-
-            <!-- Shuffle Button -->
             <button id="shuffleButton">Shuffle</button>
-
-            <!-- Divider Line -->
             <hr class="divider">
 
-            <!-- Main Elements Heading -->
             <h4 class="section-heading">Main Elements</h4>
-
             <label>Background: <select id="backgroundSelect"></select></label>
             <label>Miguel: <select id="miguelSelect"></select></label>
             <label>Title: <select id="titleSelect"></select></label>
 
-            <!-- Optional Elements Heading -->
             <h4 class="section-heading">Optional Elements</h4>
-
             <label>Lv: <select id="lvSelect"></select></label>
             <label>Shirt: <select id="shirtSelect"></select></label>
         </div>
+
+        <!-- Settings Panel -->
+        <div class="panel">
+            <h3>Settings</h3>
+            <button id="darkModeToggle">Dark Mode</button>
+            <p id="deviceType">Current Device: Detecting...</p>
+            <button id="switchDeviceButton">Switch to Mobile</button>
+        </div>
     </div>
 
-    <div class="panel">
-        <h3>Settings</h3>
-        <button id="darkModeToggle">Dark Mode</button>
-        <p id="deviceType">Current Device: Detecting...</p>
-        <button id="switchDeviceButton">Switch to Mobile</button>
-    </div>
-
+    <!-- Download & Music Buttons -->
     <div>
         <button class="download-btn" id="downloadButton">Download</button>
     </div>
@@ -63,11 +57,13 @@
     <div>
         <button id="toggleMusicButton">Play Music</button>
     </div>
-    
+
+    <!-- Background Music -->
     <audio id="backgroundMusic" loop autoplay>
         <source src="assets/audio/song.mp3" type="audio/mp3">
     </audio>
 
+    <!-- Info Section -->
     <div class="info-section" id="infoButton">Info & Instructions</div>
     <div class="info-content" id="infoContent" style="display: none;">
         <p>Welcome to the tanboymiguel - palabreo god | Cover Art Studio! Here you can select different elements to generate a custom album cover. 
