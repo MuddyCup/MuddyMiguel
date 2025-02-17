@@ -6,110 +6,13 @@
     <title>tanboymiguel - palabreo god | Cover Art Studio</title>
     <link rel="icon" type="image/png" href="assets/favicon/favicon.png">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #ffffff;
-            color: #000000;
-            transition: background-color 0.3s, color 0.3s;
-            text-align: center;
-        }
-        .container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-        }
-        .canvas-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            border: 2px solid #000;
-            border-radius: 10px;
-            background-color: #f8f8f8;
-            transition: border-color 0.3s, background-color 0.3s;
-        }
-        .canvas-container {
-            position: relative;
-            width: 500px;
-            height: 500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid #000;
-            transition: border-color 0.3s;
-            background-color: white;
-        }
-        .layer {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-        .panel {
-            padding: 15px;
-            border: 2px solid black;
-            border-radius: 10px;
-            background-color: #f0f0f0;
-            width: 250px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .download-btn {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #000;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            width: 200px;
-            text-align: center;
-        }
-        .info-section {
-            margin-top: 10px;
-            width: 200px;
-            cursor: pointer;
-            border: 1px solid #000;
-            padding: 10px;
-            text-align: center;
-            background-color: #f1f1f1;
-            transition: background-color 0.3s, color 0.3s;
-        }
-    </style>
 </head>
 <body>
+
     <h1>tanboymiguel - palabreo god | Cover Art Studio</h1>
+
     <div class="container">
-        <div class="panel">
-            <!-- Reset Button -->
-            <button id="resetButton">↺</button>
-            
-            <!-- Shuffle Button -->
-            <button id="shuffleButton">Shuffle</button>
-            
-            <!-- Divider Line -->
-            <hr class="divider">
-            
-            <!-- Main Elements Heading -->
-            <h4 class="section-heading">Main Elements</h4>
-            
-            <label>Background: <select id="backgroundSelect"></select></label>
-            <label>Miguel: <select id="miguelSelect"></select></label>
-            <label>Title: <select id="titleSelect"></select></label>
-            
-            <!-- Optional Elements Heading -->
-            <h4 class="section-heading">Optional Elements</h4>
-            
-            <label>Lv: <select id="lvSelect"></select></label>
-            <label>Shirt: <select id="shirtSelect"></select></label>
-        </div>
-        
+        <!-- Ensure the canvas is ABOVE the selections in mobile mode -->
         <div class="canvas-wrapper">
             <div class="canvas-container">
                 <canvas id="finalCanvas" width="2000" height="2000" style="display: none;"></canvas>
@@ -120,42 +23,58 @@
                 <img id="shirt" class="layer">
             </div>
         </div>
-        
+
         <div class="panel">
-            <h3>Settings</h3>
-            <button id="darkModeToggle">Dark Mode</button>
-            <p id="deviceType">Current Device: Detecting...</p>
-            <button id="switchDeviceButton">Switch to Mobile</button>
+            <!-- Reset Button -->
+            <button id="resetButton">↺</button>
+
+            <!-- Shuffle Button -->
+            <button id="shuffleButton">Shuffle</button>
+
+            <!-- Divider Line -->
+            <hr class="divider">
+
+            <!-- Main Elements Heading -->
+            <h4 class="section-heading">Main Elements</h4>
+
+            <label>Background: <select id="backgroundSelect"></select></label>
+            <label>Miguel: <select id="miguelSelect"></select></label>
+            <label>Title: <select id="titleSelect"></select></label>
+
+            <!-- Optional Elements Heading -->
+            <h4 class="section-heading">Optional Elements</h4>
+
+            <label>Lv: <select id="lvSelect"></select></label>
+            <label>Shirt: <select id="shirtSelect"></select></label>
         </div>
     </div>
 
-    <!-- Download Button -->
+    <div class="panel">
+        <h3>Settings</h3>
+        <button id="darkModeToggle">Dark Mode</button>
+        <p id="deviceType">Current Device: Detecting...</p>
+        <button id="switchDeviceButton">Switch to Mobile</button>
+    </div>
+
     <div>
         <button class="download-btn" id="downloadButton">Download</button>
     </div>
 
-    <!-- Music Toggle Button -->
     <div>
         <button id="toggleMusicButton">Play Music</button>
     </div>
-
-    <!-- Background Music -->
-    <audio id="backgroundMusic" loop>
+    
+    <audio id="backgroundMusic" loop autoplay>
         <source src="assets/audio/song.mp3" type="audio/mp3">
     </audio>
 
-    <!-- Info Section -->
     <div class="info-section" id="infoButton">Info & Instructions</div>
     <div class="info-content" id="infoContent" style="display: none;">
-        <p>
-            Welcome to the tanboymiguel - palabreo god | Cover Art Studio! Here you can select different elements to generate a custom album cover. 
-            Choose your Background, Miguel, Title, and more. Once satisfied, click 'Download' to save your final cover! 
-            If you are stuck and need inspiration, click the shuffle button. Want to start over? Click the reset button. 
-            You can also choose between Light Mode and Dark Mode, as well as a Desktop version and Mobile version of the website!
-        </p>
+        <p>Welcome to the tanboymiguel - palabreo god | Cover Art Studio! Here you can select different elements to generate a custom album cover. 
+        Choose your background, Miguel, Title, and more. Once satisfied, click 'Download' to save your final cover! If you are stuck and need inspiration click the shuffle button to get those creative juices flowing. Want to start over? Click the reset button to reset the Cover Art Creator. You can also choose between light mode and dark mode as well as a desktop version and mobile version of the website!</p>
     </div>
 
-    <!-- JavaScript File -->
     <script src="cover_art_generator.js?v=6"></script>
+
 </body>
 </html>
