@@ -1,3 +1,4 @@
+console.log("Loading latest version of cover_art_generator.js");
 document.addEventListener("DOMContentLoaded", function () {
     const layers = {
         background: ["None", "bg1.png", "bg2.png", "bg3.png", "bg4.png", "bg5.png", "bg6.png", "bg7.png", "bg8.png", "bg9.png", "bg10.png", "bg11.png", "bg12.png", "bg13.png", "bg14.png", "bg15.png", "bg16.png"],
