@@ -34,12 +34,14 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Updating canvas with selected images...");
 
     const canvas = document.getElementById("finalCanvas");
-    const ctx = canvas.getContext("2d");
+    if (!canvas) {
+        console.error("Canvas element not found!");
+        return; // Prevents null error
+    }
     
-    // Clear the canvas before redrawing
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear before redrawing
 
-    // Define layer order: Background → Miguel → Title → LV (if selected) → Shirt (if selected)
     const layersToDraw = [
         { id: "background", required: true },
         { id: "miguel", required: true },
@@ -48,12 +50,8 @@ document.addEventListener("DOMContentLoaded", function () {
         { id: "shirt", required: false }
     ];
 
-    let imagesLoaded = 0;
-    const totalImages = layersToDraw.length;
-
     function drawImage(image) {
         ctx.drawImage(image, 0, 0, 2000, 2000);
-        imagesLoaded++;
     }
 
     layersToDraw.forEach(layer => {
@@ -66,6 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 }
+
 
 function updateLayer(layer, file) {
     const imgElement = document.getElementById(layer);
