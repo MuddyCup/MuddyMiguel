@@ -8,17 +8,29 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     function populateDropdowns() {
-        Object.keys(layers).forEach(layer => {
-            const selectElement = document.getElementById(`${layer}Select`);
-            layers[layer].forEach(file => {
-                let option = document.createElement("option");
-                option.value = file;
-                option.textContent = file;
-                selectElement.appendChild(option);
-            });
-            selectElement.addEventListener("change", () => updateLayer(layer, selectElement.value));
+    console.log("Populating dropdowns..."); // Check if function runs
+
+    Object.keys(layers).forEach(layer => {
+        const selectElement = document.getElementById(`${layer}Select`);
+
+        if (!selectElement) {
+            console.error(`Dropdown not found for layer: ${layer}`);
+            return; // Stops execution if the dropdown is missing
+        }
+
+        console.log(`Adding options to: ${layer}`); // Verify each layer
+
+        layers[layer].forEach(file => {
+            let option = document.createElement("option");
+            option.value = file;
+            option.textContent = file;
+            selectElement.appendChild(option);
         });
-    }
+
+        selectElement.addEventListener("change", () => updateLayer(layer, selectElement.value));
+    });
+}
+
 
     function updateLayer(layer, file) {
         const imgElement = document.getElementById(layer);
