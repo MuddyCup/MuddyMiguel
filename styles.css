@@ -220,44 +220,39 @@ button:hover {
     margin-top: 5px;
 }
 
-/* ✅ Mobile Layout */
+/* Mobile Layout */
 @media screen and (max-width: 768px) {
     .container {
-        display: flex;
-        flex-direction: column;
+        flex-direction: column; /* Stack everything vertically */
         align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
         text-align: center;
         width: 100%;
-        padding-top: 30px;
     }
 
-    /* ✅ Ensure Title is at the Top */
-    h1 {
-        margin-top: 20px;
-        font-size: 22px;
+    .canvas-wrapper {
+        order: 1; /* Ensure canvas is first */
+        width: 90vw; /* Make it scale properly */
+        height: auto; /* Keep aspect ratio */
+        max-width: 500px;
+        max-height: 500px;
+        margin-bottom: 20px; /* Add space between canvas and menu */
     }
 
-    /* ✅ Selection Menu Below Canvas */
     .panel {
-        width: 90%;
+        order: 2; /* Ensure selection menu is below */
+        width: 90%; /* Allow it to take full width */
         text-align: center;
         margin-top: 20px;
-        position: relative;
-        z-index: 10;
     }
 
-    /* ✅ Fix Canvas Size & Placement */
-    .canvas-container {
-        width: 90vw;
-        height: auto;
-        max-width: 90vw;
-        max-height: 90vw;
-        margin-top: 20px; /* Adds space below selection menu */
-    }
-
-    /* ✅ Buttons & Info Section */
-    .download-btn, .info-section {
+    .download-btn,
+    .info-section {
         width: 90%;
+        margin-top: 15px;
+    }
+
+    h1 {
+        margin-top: 20px; /* Add space at the top */
     }
 }
