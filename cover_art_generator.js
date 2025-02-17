@@ -166,10 +166,9 @@ function toggleInfoSection() {
         link.click();
     }
 
- layersToLoad.forEach(layer => {
+layersToLoad.forEach(layer => {
     const img = document.getElementById(layer.id);
 
-    // ✅ Check if the image element exists before accessing `.src`
     if (!img) {
         console.error(`Element with ID '${layer.id}' not found.`);
         imagesLoaded++;
@@ -181,7 +180,7 @@ function toggleInfoSection() {
     } else {
         imagesLoaded++;
     }
-});
+});  // ✅ Correctly closed
 
 
 
@@ -226,10 +225,10 @@ setTimeout(() => {
     document.getElementById("darkModeToggle").addEventListener("click", toggleDarkMode);
     document.getElementById("infoButton").addEventListener("click", toggleInfoSection);
     document.getElementById("switchDeviceButton").addEventListener("click", toggleDeviceMode);
+    updateDeviceUI();
+}, 100);  // ✅ Corrected version
 
-    updateDeviceUI(); // Initialize device UI detection
-}, 100);
-    });  // ✅ Closes the `DOMContentLoaded` event listener
+    };  // ✅ Closes the `DOMContentLoaded` event listener
 
 function toggleMusic() {
     const audio = document.getElementById("backgroundMusic");
