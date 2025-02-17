@@ -198,3 +198,5 @@ setTimeout(() => {
 
     updateDeviceUI(); // Initialize device UI detection
 }, 100);
+    });  // ✅ Closes the `DOMContentLoaded` event listener
+
