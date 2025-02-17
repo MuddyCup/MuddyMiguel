@@ -167,8 +167,17 @@ function toggleInfoSection() {
     }
 
   layersToLoad.forEach(layer => {
+   layersToLoad.forEach(layer => {
     const img = document.getElementById(layer.id);
-    if (img && img.src && (layer.required || !img.src.includes("None"))) {
+
+    // ✅ Check if the image element exists before accessing `.src`
+    if (!img) {
+        console.error(`Element with ID '${layer.id}' not found.`);
+        imagesLoaded++;
+        return;
+    }
+
+    if (img.src && (layer.required || !img.src.includes("None"))) {
         loadImage(layer.id, img.src);
     } else {
         imagesLoaded++;
