@@ -34,6 +34,7 @@ body {
 }
 
 .canvas-container {
+    position: relative;
     width: 2000px;
     height: 2000px;
     display: flex;
@@ -41,15 +42,15 @@ body {
     justify-content: center;
     border: 2px solid #000;
     background-color: white;
-    overflow: hidden; /* Prevents images from overflowing */
+    overflow: hidden;
 }
 
 .layer {
     position: absolute;
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Ensures the image fits inside without stretching */
-    object-position: center; /* Centers the image */
+    object-fit: contain; /* Ensures images fit without distortion */
+    object-position: center; /* Centers images */
 }
 
 /* Panel Styling */
