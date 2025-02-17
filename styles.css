@@ -4,19 +4,25 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
+    justify-content: flex-start;
+    height: auto;
     margin: 0;
     background-color: #ffffff;
     color: #000000;
     transition: background-color 0.3s, color 0.3s;
     text-align: center;
+    padding-top: 20px; /* Adds padding at the top */
+}
+
+/* Title Styling */
+h1 {
+    margin-top: 20px; /* Ensures title is properly spaced from the top */
 }
 
 /* Layout Containers */
 .canvas-container {
     position: relative;
-    width: 500px; /* Default size */
+    width: 500px; /* Default desktop size */
     height: 500px;
     display: flex;
     align-items: center;
@@ -24,6 +30,7 @@ body {
     border: 2px solid #000;
     background-color: white;
     overflow: hidden;
+    margin-bottom: 20px; /* Adds spacing below the canvas */
 }
 
 /* Ensure images fit the canvas without distortion */
@@ -60,6 +67,7 @@ body {
     width: 250px;
     transition: background-color 0.3s, color 0.3s;
     text-align: center;
+    margin-bottom: 20px; /* Adds spacing below the selection panel */
 }
 
 /* Button Styling */
@@ -77,10 +85,6 @@ button {
 
 button:hover {
     background-color: #444;
-}
-
-.download-btn {
-    margin-top: 20px;
 }
 
 /* Info Section Styling */
@@ -127,46 +131,17 @@ button:hover {
     background-color: #bbb;
 }
 
-/* Shuffle Button */
-#shuffleButton {
+/* Shuffle & Reset Buttons */
+#shuffleButton, #resetButton {
     margin-top: 10px;
-    padding: 10px;
-    background-color: #000;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
     width: 100%;
-    text-align: center;
-    font-size: 16px;
-    border-radius: 5px;
-    display: block;
 }
 
-#shuffleButton:hover {
-    background-color: #444;
-}
-
-/* Reset Button */
 #resetButton {
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #000;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
     width: 50px;
     height: 50px;
-    text-align: center;
-    font-size: 20px;
     border-radius: 50%;
-    display: block;
-    margin: 0 auto;
-}
-
-#resetButton:hover {
-    background-color: #444;
+    font-size: 20px;
 }
 
 /* Divider Line */
@@ -208,30 +183,37 @@ button:hover {
     gap: 20px;
 }
 
-/* ✅ Mobile Layout Fix: Ensure Canvas Fits Screen */
+/* ✅ Mobile Layout Fix: Moves Selection Below Canvas & Centers Everything */
 @media screen and (max-width: 768px) {
     .container {
-        flex-direction: column;
+        flex-direction: column; /* Stack everything vertically */
         align-items: center;
         justify-content: center;
         text-align: center;
         width: 100%;
     }
 
-    /* ✅ Ensure Canvas is the Right Size */
+    /* ✅ Ensure Title is at the Top with Proper Spacing */
+    h1 {
+        margin-top: 30px;
+        font-size: 22px;
+    }
+
+    /* ✅ Ensure Canvas is the Right Size & Positioned Correctly */
     .canvas-container {
         width: 90vw; /* Takes 90% of the screen width */
         height: auto; /* Keeps the aspect ratio */
         max-width: 90vw;
         max-height: 90vw;
-        margin-top: 10px; /* Prevents the canvas from starting too low */
+        margin-top: 20px; /* Ensures it doesn’t start too low */
     }
 
-    /* ✅ Ensure Elements Fit Well */
+    /* ✅ Ensure Selection Menu Moves Below the Canvas */
     .panel {
         width: 90%;
         text-align: center;
-        margin-top: 10px;
+        margin-top: 20px; /* Space below canvas */
+        margin-bottom: 10px; /* Space before next section */
     }
 
     .download-btn, .info-section {
