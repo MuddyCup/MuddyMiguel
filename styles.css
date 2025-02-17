@@ -16,8 +16,8 @@ body {
 /* Layout Containers */
 .canvas-container {
     position: relative;
-    width: 2000px;
-    height: 2000px;
+    width: 500px; /* Default size */
+    height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,23 +26,20 @@ body {
     overflow: hidden;
 }
 
+/* Ensure images fit the canvas without distortion */
 .layer {
     position: absolute;
     width: 100%;
     height: 100%;
     max-width: 2000px;
     max-height: 2000px;
-    object-fit: contain; /* Ensures images fit the canvas without distortion */
+    object-fit: contain;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-
-
-
-
-
+/* Wrapper to Center the Canvas */
 .canvas-wrapper {
     display: flex;
     align-items: center;
@@ -62,19 +59,7 @@ body {
     background-color: #f0f0f0;
     width: 250px;
     transition: background-color 0.3s, color 0.3s;
-}
-
-.panel label {
-    display: block;
-    margin: 10px 0;
-}
-
-/* Dropdown Styling */
-select {
-    display: block !important;
-    height: auto !important;
-    max-height: none !important;
-    overflow-y: visible !important;
+    text-align: center;
 }
 
 /* Button Styling */
@@ -142,6 +127,7 @@ button:hover {
     background-color: #bbb;
 }
 
+/* Shuffle Button */
 #shuffleButton {
     margin-top: 10px;
     padding: 10px;
@@ -154,14 +140,14 @@ button:hover {
     text-align: center;
     font-size: 16px;
     border-radius: 5px;
-    display: block;  /* Ensures it stays in its own row */
+    display: block;
 }
-
 
 #shuffleButton:hover {
     background-color: #444;
 }
 
+/* Reset Button */
 #resetButton {
     margin-bottom: 10px;
     padding: 10px;
@@ -199,112 +185,56 @@ button:hover {
     color: #333;
 }
 
-.dark-mode #shuffleButton,
-.dark-mode #resetButton {
-    background-color: #fff !important;
-    color: #000 !important;
-}
-
-.light-mode #shuffleButton,
-.light-mode #resetButton {
-    background-color: #000 !important;
-    color: #fff !important;
-}
-
-.section-heading {
-    margin-top: 10px;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-    color: #333; /* Default color in light mode */
-}
-
 /* Make section headings white in dark mode */
 .dark-mode .section-heading {
     color: #fff;
 }
+
+/* Space Between Download & Music Button */
 .download-btn {
-    margin-bottom: 5px; /* Adds space below the Download button */
+    margin-bottom: 5px;
 }
 
 #toggleMusicButton {
-    margin-top: 5px; /* Adds space above the Music button */
+    margin-top: 5px;
 }
 
-/* Default layout: Desktop (horizontal) */
+/* Default Desktop Layout */
 .container {
     display: flex;
-    flex-direction: row; /* Horizontal layout for desktop */
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 20px;
 }
 
-/* Mobile Layout */
+/* ✅ Mobile Layout Fix: Ensure Canvas Fits Screen */
 @media screen and (max-width: 768px) {
     .container {
-        flex-direction: column; /* Stack everything vertically */
-    }
-
-    .panel {
-        width: 90%; /* Make panels take up more space */
-        text-align: center;
-    }
-
-    .canvas-wrapper {
-        order: 1; /* Canvas stays at the top */
-    }
-
-    .panel:first-of-type {
-        order: 2; /* Selections move below the canvas */
-    }
-
-    .panel:last-of-type {
-        order: 3; /* Settings move below the selections */
-    }
-
-    .download-btn, .info-section {
-        order: 4; /* Download & Info move to the bottom */
-        width: 90%;
-    }
-}
-/* Default Desktop Canvas */
-.canvas-container {
-    width: 500px; /* Default desktop size */
-    height: 500px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background-color: white;
-}
-
-/* Mobile Canvas: Scale to Fit Screen */
-@media screen and (max-width: 768px) {
-    .canvas-container {
-        width: 90vw; /* Scale to 90% of the screen width */
-        height: 90vw; /* Keep the 1:1 ratio */
-        max-width: 500px; /* Prevent it from getting too large */
-        max-height: 500px;
-    }
-
-    .container {
-        flex-direction: column; /* Stack elements vertically */
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
         width: 100%;
     }
 
+    /* ✅ Ensure Canvas is the Right Size */
+    .canvas-container {
+        width: 90vw; /* Takes 90% of the screen width */
+        height: auto; /* Keeps the aspect ratio */
+        max-width: 90vw;
+        max-height: 90vw;
+        margin-top: 10px; /* Prevents the canvas from starting too low */
+    }
+
+    /* ✅ Ensure Elements Fit Well */
     .panel {
-        width: 90%; /* Allow panels to fit nicely */
+        width: 90%;
         text-align: center;
         margin-top: 10px;
     }
 
-    .download-btn,
-    .info-section {
+    .download-btn, .info-section {
         width: 90%;
     }
 }
-
