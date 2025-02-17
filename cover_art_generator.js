@@ -7,23 +7,20 @@ document.addEventListener("DOMContentLoaded", function () {
         shirt: ["None", "shirt1.png", "shirt2.png", "shirt3.png", "shirt4.png", "shirt5.png", "shirt6.png", "shirt7.png", "shirt8.png", "shirt9.png", "shirt10.png"]
     };
 
-
-   function populateDropdowns() {
+    function populateDropdowns() {
         Object.keys(layers).forEach(layer => {
             const selectElement = document.getElementById(`${layer}Select`);
-            console.log(`Populating ${layer} with options:`, layers[layer]); // Debugging
-
             layers[layer].forEach(file => {
                 let option = document.createElement("option");
                 option.value = file;
                 option.textContent = file;
                 selectElement.appendChild(option);
             });
-
             selectElement.addEventListener("change", () => updateLayer(layer, selectElement.value));
         });
     }
-     function updateLayer(layer, file) {
+
+    function updateLayer(layer, file) {
         const imgElement = document.getElementById(layer);
         if (file === "None") {
             imgElement.src = ""; // Remove the image if 'None' is selected
@@ -32,49 +29,24 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    document.getElementById("downloadButton").addEventListener("click", downloadImage);
-    populateDropdowns();
-});
-
-
     function downloadImage() {
-    const canvas = document.createElement("canvas");
-    canvas.width = 2000;  // Ensures the correct width
-    canvas.height = 2000; // Ensures the correct height
-    const ctx = canvas.getContext("2d");
+        const canvas = document.createElement("canvas");
+        canvas.width = 2000;
+        canvas.height = 2000;
+        const ctx = canvas.getContext("2d");
 
-    let imagesLoaded = 0;
-    const totalImages = Object.keys(layers).length;
+        let imagesLoaded = 0;
+        const totalImages = Object.keys(layers).length;
 
-    function drawImage(img, callback) {
-        const image = new Image();
-        image.crossOrigin = "anonymous";
-        image.src = img.src;
-        image.onload = () => {
-            ctx.drawImage(image, 0, 0, 2000, 2000); // Draws image correctly
-            callback();
-        };
-    }
-
-    function checkCompletion() {
-        imagesLoaded++;
-        if (imagesLoaded === totalImages) {
-            const link = document.createElement("a");
-            link.download = "custom_album_cover.png";
-            link.href = canvas.toDataURL("image/png");
-            link.click();
+        function drawImage(img, callback) {
+            const image = new Image();
+            image.crossOrigin = "anonymous";
+            image.src = img.src;
+            image.onload = () => {
+                ctx.drawImage(image, 0, 0, 2000, 2000);
+                callback();
+            };
         }
-    }
-
-    Object.keys(layers).forEach(layer => {
-        const img = document.getElementById(layer);
-        if (img.src && img.src !== window.location.href) {
-            drawImage(img, checkCompletion);
-        } else {
-            imagesLoaded++;
-        }
-    });
-}
 
         function checkCompletion() {
             imagesLoaded++;
