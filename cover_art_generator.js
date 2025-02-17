@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
     populateDropdowns();
 });
 
-    }
+    
 
     function updateLayer(layer, file) {
         const imgElement = document.getElementById(layer);
