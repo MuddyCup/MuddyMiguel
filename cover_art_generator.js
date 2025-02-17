@@ -69,6 +69,12 @@ document.addEventListener("DOMContentLoaded", function () {
         button.style.color = isDarkMode ? "#000" : "#fff";
     });
 }
+function toggleInfoSection() {
+    const infoContent = document.getElementById("infoContent");
+    if (infoContent) {
+        infoContent.style.display = infoContent.style.display === "none" ? "block" : "none";
+    }
+}
 
 
     function applyDarkModePreference() {
