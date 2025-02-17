@@ -268,4 +268,43 @@ button:hover {
         width: 90%;
     }
 }
+/* Default Desktop Canvas */
+.canvas-container {
+    width: 500px; /* Default desktop size */
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: white;
+}
+
+/* Mobile Canvas: Scale to Fit Screen */
+@media screen and (max-width: 768px) {
+    .canvas-container {
+        width: 90vw; /* Scale to 90% of the screen width */
+        height: 90vw; /* Keep the 1:1 ratio */
+        max-width: 500px; /* Prevent it from getting too large */
+        max-height: 500px;
+    }
+
+    .container {
+        flex-direction: column; /* Stack elements vertically */
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+    }
+
+    .panel {
+        width: 90%; /* Allow panels to fit nicely */
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .download-btn,
+    .info-section {
+        width: 90%;
+    }
+}
 
