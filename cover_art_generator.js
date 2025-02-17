@@ -34,7 +34,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM Loaded - Running populateDropdowns()");
-    populateDropdowns();
+    
+    // Ensure the script runs after elements are loaded
+    setTimeout(() => {
+        populateDropdowns();
+    }, 100);
 });
 
     
