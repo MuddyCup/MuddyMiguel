@@ -127,6 +127,14 @@
 
     </div>
     <button class="download-btn" id="downloadButton">Download</button>
+    <audio id="backgroundMusic" loop>
+    <source src="assets/audio/song.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+</audio>
+<div><button id="toggleMusicButton">Play Music</button></div>
+<audio id="backgroundMusic" loop autoplay>
+    <source src="assets/audio/song.mp3" type="audio/mp3">
+</audio>
     <div class="info-section" id="infoButton">Info & Instructions</div>
 <div class="info-content" id="infoContent" style="display: none;">
     <p>Welcome to the tanboymiguel - palabreo god | Cover Art Studio! Here you can select different elements to generate a custom album cover. 
@@ -134,14 +142,7 @@
 </div>
 
     <script src="cover_art_generator.js?v=4"></script>
-    <audio id="backgroundMusic" loop>
-    <source src="assets/audio/song.mp3" type="audio/mp3">
-    Your browser does not support the audio element.
-</audio>
-<button id="toggleMusicButton">Play Music</button>
-<audio id="backgroundMusic" loop autoplay>
-    <source src="assets/audio/song.mp3" type="audio/mp3">
-</audio>
+    
 
 </body>
 </html>
