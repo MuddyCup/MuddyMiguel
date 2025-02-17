@@ -53,6 +53,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    function resetSelections() {
+        console.log("Resetting selections...");
+        Object.keys(layers).forEach(layer => {
+            const selectElement = document.getElementById(`${layer}Select`);
+            if (!selectElement) return;
+            selectElement.value = "None";
+            updateLayer(layer, "None");
+        });
+    }
+
     function shuffleSelection() {
         console.log("Shuffling selections...");
         Object.keys(layers).forEach(layer => {
@@ -114,5 +124,6 @@ document.addEventListener("DOMContentLoaded", function () {
         populateDropdowns();
         document.getElementById("downloadButton").addEventListener("click", downloadImage);
         document.getElementById("shuffleButton").addEventListener("click", shuffleSelection);
+        document.getElementById("resetButton").addEventListener("click", resetSelections);
     }, 100);
 });
