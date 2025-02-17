@@ -223,3 +223,10 @@ button:hover {
 .dark-mode .section-heading {
     color: #fff;
 }
+.download-btn {
+    margin-bottom: 20px; /* Adds space below the Download button */
+}
+
+#toggleMusicButton {
+    margin-top: 20px; /* Adds space above the Music button */
+}
