@@ -257,5 +257,5 @@ function toggleMusic() {
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("toggleMusicButton").addEventListener("click", toggleMusic);
 });
-
+}
 
