@@ -53,15 +53,23 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function toggleDarkMode() {
-        document.body.classList.toggle("dark-mode");
-        const isDarkMode = document.body.classList.contains("dark-mode");
-        localStorage.setItem("darkMode", isDarkMode);
-        
-        // Update button text based on mode
-        const darkModeButton = document.getElementById("darkModeToggle");
-        darkModeButton.textContent = isDarkMode ? "Light Mode" : "Dark Mode";
-    }
+  function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+    const isDarkMode = document.body.classList.contains("dark-mode");
+    localStorage.setItem("darkMode", isDarkMode);
+    
+    // Update button text based on mode
+    const darkModeButton = document.getElementById("darkModeToggle");
+    darkModeButton.textContent = isDarkMode ? "Light Mode" : "Dark Mode";
+
+    // Update shuffle and reset button styles
+    const buttons = document.querySelectorAll("#shuffleButton, #resetButton");
+    buttons.forEach(button => {
+        button.style.backgroundColor = isDarkMode ? "#fff" : "#000";
+        button.style.color = isDarkMode ? "#000" : "#fff";
+    });
+}
+
 
     function applyDarkModePreference() {
         const isDarkMode = localStorage.getItem("darkMode") === "true";
