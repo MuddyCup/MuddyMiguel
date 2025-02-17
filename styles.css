@@ -230,3 +230,42 @@ button:hover {
 #toggleMusicButton {
     margin-top: 5px; /* Adds space above the Music button */
 }
+
+/* Default layout: Desktop (horizontal) */
+.container {
+    display: flex;
+    flex-direction: row; /* Horizontal layout for desktop */
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Mobile Layout */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Stack everything vertically */
+    }
+
+    .panel {
+        width: 90%; /* Make panels take up more space */
+        text-align: center;
+    }
+
+    .canvas-wrapper {
+        order: 1; /* Canvas stays at the top */
+    }
+
+    .panel:first-of-type {
+        order: 2; /* Selections move below the canvas */
+    }
+
+    .panel:last-of-type {
+        order: 3; /* Settings move below the selections */
+    }
+
+    .download-btn, .info-section {
+        order: 4; /* Download & Info move to the bottom */
+        width: 90%;
+    }
+}
+
