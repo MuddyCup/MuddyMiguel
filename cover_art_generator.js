@@ -116,44 +116,50 @@ function toggleInfoSection() {
         });
     }
 
-    function downloadImage() {
-        console.log("Downloading image...");
-        const canvas = document.createElement("canvas");
-        canvas.width = 2000;
-        canvas.height = 2000;
-        const ctx = canvas.getContext("2d");
-        let imagesLoaded = 0;
-        const totalImages = Object.keys(layers).length;
+   function downloadImage() {
+    console.log("Downloading image...");
 
-        function drawImage(img, callback) {
+    const canvas = document.createElement("canvas");
+    canvas.width = 2000;
+    canvas.height = 2000;
+    const ctx = canvas.getContext("2d");
+
+    const layersToLoad = ["background", "miguel", "title", "lv", "shirt"]; // Ordered from bottom to top
+    let imagesLoaded = 0;
+
+    function drawImage(img, callback) {
+        if (img && img.src && img.style.display !== "none") {
             const image = new Image();
             image.crossOrigin = "anonymous";
             image.src = img.src;
             image.onload = () => {
-                ctx.drawImage(image, 0, 0);
-                callback();
-            };
-        }
-
-        function checkCompletion() {
-            imagesLoaded++;
-            if (imagesLoaded === totalImages) {
-                const link = document.createElement("a");
-                link.download = "custom_album_cover.png";
-                link.href = canvas.toDataURL("image/png");
-                link.click();
-            }
-        }
-
-        Object.keys(layers).forEach(layer => {
-            const img = document.getElementById(layer);
-            if (img.src && img.src !== window.location.href) {
-                drawImage(img, checkCompletion);
-            } else {
+                ctx.drawImage(image, 0, 0, 2000, 2000); // Ensures each layer is drawn at full size
                 imagesLoaded++;
+                if (imagesLoaded === layersToLoad.length) {
+                    saveCanvas();
+                }
+            };
+        } else {
+            imagesLoaded++;
+            if (imagesLoaded === layersToLoad.length) {
+                saveCanvas();
             }
-        });
+        }
     }
+
+    function saveCanvas() {
+        const link = document.createElement("a");
+        link.download = "custom_album_cover.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    }
+
+    layersToLoad.forEach(layer => {
+        const img = document.getElementById(layer);
+        drawImage(img);
+    });
+}
+
 
     applyDarkModePreference();
 
