@@ -163,5 +163,6 @@ function toggleInfoSection() {
         document.getElementById("shuffleButton").addEventListener("click", shuffleSelection);
         document.getElementById("resetButton").addEventListener("click", resetSelections);
         document.getElementById("darkModeToggle").addEventListener("click", toggleDarkMode);
+        document.getElementById("infoButton").addEventListener("click", toggleInfoSection);
     }, 100);
 });
