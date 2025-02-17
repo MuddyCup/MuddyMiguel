@@ -57,14 +57,20 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.classList.toggle("dark-mode");
         const isDarkMode = document.body.classList.contains("dark-mode");
         localStorage.setItem("darkMode", isDarkMode);
+        
+        // Update button text based on mode
+        const darkModeButton = document.getElementById("darkModeToggle");
+        darkModeButton.textContent = isDarkMode ? "Light Mode" : "Dark Mode";
     }
 
     function applyDarkModePreference() {
         const isDarkMode = localStorage.getItem("darkMode") === "true";
         if (isDarkMode) {
             document.body.classList.add("dark-mode");
+            document.getElementById("darkModeToggle").textContent = "Light Mode";
         } else {
             document.body.classList.remove("dark-mode");
+            document.getElementById("darkModeToggle").textContent = "Dark Mode";
         }
     }
 
