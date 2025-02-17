@@ -46,7 +46,6 @@
             border: 2px solid #000;
             transition: border-color 0.3s;
             background-color: white;
-            <canvas id="finalCanvas" width="2000" height="2000"></canvas>
         }
         .layer {
             position: absolute;
@@ -87,31 +86,33 @@
 <body>
     <h1>tanboymiguel - palabreo god | Cover Art Studio</h1>
     <div class="container">
-    <div class="panel">
-    <!-- Reset Button -->
-    <button id="resetButton">↺</button>
-    
-    <!-- Shuffle Button -->
-    <button id="shuffleButton">Shuffle</button>
-    
-    <!-- Divider Line -->
-    <hr class="divider">
-    
-    <!-- Main Elements Heading -->
-    <h4 class="section-heading">Main Elements</h4>
-    
-    <label>Background: <select id="backgroundSelect"></select></label>
-    <label>Miguel: <select id="miguelSelect"></select></label>
-    <label>Title: <select id="titleSelect"></select></label>
-    
-    <!-- Optional Elements Heading -->
-    <h4 class="section-heading">Optional Elements</h4>
-    
-    <label>Lv: <select id="lvSelect"></select></label>
-    <label>Shirt: <select id="shirtSelect"></select></label>
-</div>
+        <div class="panel">
+            <!-- Reset Button -->
+            <button id="resetButton">↺</button>
+            
+            <!-- Shuffle Button -->
+            <button id="shuffleButton">Shuffle</button>
+            
+            <!-- Divider Line -->
+            <hr class="divider">
+            
+            <!-- Main Elements Heading -->
+            <h4 class="section-heading">Main Elements</h4>
+            
+            <label>Background: <select id="backgroundSelect"></select></label>
+            <label>Miguel: <select id="miguelSelect"></select></label>
+            <label>Title: <select id="titleSelect"></select></label>
+            
+            <!-- Optional Elements Heading -->
+            <h4 class="section-heading">Optional Elements</h4>
+            
+            <label>Lv: <select id="lvSelect"></select></label>
+            <label>Shirt: <select id="shirtSelect"></select></label>
+        </div>
+        
         <div class="canvas-wrapper">
             <div class="canvas-container">
+                <canvas id="finalCanvas" width="2000" height="2000" style="display: none;"></canvas>
                 <img id="background" class="layer">
                 <img id="miguel" class="layer">
                 <img id="title" class="layer">
@@ -119,30 +120,42 @@
                 <img id="shirt" class="layer">
             </div>
         </div>
+        
         <div class="panel">
-    <h3>Settings</h3>
-    <button id="darkModeToggle">Dark Mode</button>
-    <p id="deviceType">Current Device: Detecting...</p>
-    <button id="switchDeviceButton">Switch to Mobile</button>
-</div>
-
+            <h3>Settings</h3>
+            <button id="darkModeToggle">Dark Mode</button>
+            <p id="deviceType">Current Device: Detecting...</p>
+            <button id="switchDeviceButton">Switch to Mobile</button>
+        </div>
     </div>
+
+    <!-- Download Button -->
     <div>
-    <button class="download-btn" id="downloadButton">Download</button>
-</div>
-    
-<div><button id="toggleMusicButton">Play Music</button></div>
-<audio id="backgroundMusic" loop autoplay>
-    <source src="assets/audio/song.mp3" type="audio/mp3">
-</audio>
+        <button class="download-btn" id="downloadButton">Download</button>
+    </div>
+
+    <!-- Music Toggle Button -->
+    <div>
+        <button id="toggleMusicButton">Play Music</button>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="backgroundMusic" loop>
+        <source src="assets/audio/song.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Info Section -->
     <div class="info-section" id="infoButton">Info & Instructions</div>
-<div class="info-content" id="infoContent" style="display: none;">
-    <p>Welcome to the tanboymiguel - palabreo god | Cover Art Studio! Here you can select different elements to generate a custom album cover. 
-    Choose your background, Miguel, Title, and more. Once satisfied, click 'Download' to save your final cover! If you are stuck and need inspiration click the shuffle button to get those creative juices flowing. Want to start over? Click the reset button to reset the Cover Art Creator. You can also choose between lightmode and darkmode as well as a desktop version and mobile version fo the website!</p>
-</div>
+    <div class="info-content" id="infoContent" style="display: none;">
+        <p>
+            Welcome to the tanboymiguel - palabreo god | Cover Art Studio! Here you can select different elements to generate a custom album cover. 
+            Choose your Background, Miguel, Title, and more. Once satisfied, click 'Download' to save your final cover! 
+            If you are stuck and need inspiration, click the shuffle button. Want to start over? Click the reset button. 
+            You can also choose between Light Mode and Dark Mode, as well as a Desktop version and Mobile version of the website!
+        </p>
+    </div>
 
-   <script src="cover_art_generator.js?v=6"></script>
-    
-
+    <!-- JavaScript File -->
+    <script src="cover_art_generator.js?v=6"></script>
 </body>
 </html>
