@@ -28,11 +28,15 @@ body {
 
 .layer {
     position: absolute;
-    width: auto;  /* Uses original image width */
-    height: auto; /* Uses original image height */
+    width: 100%;  /* Ensures images do not exceed canvas */
+    height: 100%;
+    max-width: 2000px;
+    max-height: 2000px;
+    object-fit: contain; /* Ensures images fit without distortion */
     top: 0;
     left: 0;
 }
+
 
 
 
