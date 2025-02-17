@@ -18,6 +18,9 @@ body {
     position: relative;
     width: 2000px;
     height: 2000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 2px solid #000;
     background-color: white;
     overflow: hidden;
@@ -25,10 +28,11 @@ body {
 
 .layer {
     position: absolute;
-    width: 2000px; /* Ensures correct width */
-    height: 2000px; /* Ensures correct height */
-    top: 0;
-    left: 0;
+    width: 2000px; /* Ensures proper size */
+    height: 2000px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centers the images */
 }
 
 
@@ -42,18 +46,6 @@ body {
     background-color: #f8f8f8;
     transition: border-color 0.3s, background-color 0.3s;
 }
-
-.canvas-container {
-    position: relative;
-    width: 2000px;
-    height: 2000px;
-    display: block; /* Prevents centering of all elements */
-    border: 2px solid #000;
-    background-color: white;
-    overflow: hidden;
-}
-
-
 
 /* Panel Styling */
 .panel {
