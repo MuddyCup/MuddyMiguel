@@ -49,62 +49,68 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function downloadImage() {
-        console.log("Downloading image...");
-        const canvas = document.createElement("canvas");
-        canvas.width = 2000;
-        canvas.height = 2000;
-        const ctx = canvas.getContext("2d");
+   function downloadImage() {
+    console.log("Downloading image...");
 
-        const layersToLoad = [
-            { id: "background", required: true },
-            { id: "miguel", required: true },
-            { id: "title", required: true },
-            { id: "lv", required: false },
-            { id: "shirt", required: false }
-        ];
+    const canvas = document.createElement("canvas");
+    canvas.width = 2000;
+    canvas.height = 2000;
+    const ctx = canvas.getContext("2d");
 
-        let imagesLoaded = 0;
-        let totalImages = layersToLoad.length;
+    // Layer order: Background → Miguel → Title → LV (if selected) → Shirt (if selected)
+    const layersToLoad = [
+        { id: "background", required: true },
+        { id: "miguel", required: true },
+        { id: "title", required: true },
+        { id: "lv", required: false }, // Optional layer
+        { id: "shirt", required: false } // Optional layer
+    ];
 
-        function drawImage(image) {
-            ctx.drawImage(image, 0, 0, 2000, 2000);
-            imagesLoaded++;
+    let imagesLoaded = 0;
+    let totalImages = layersToLoad.length;
+
+    function drawImage(image, callback) {
+        ctx.drawImage(image, 0, 0, 2000, 2000);
+        imagesLoaded++;
+        if (imagesLoaded === totalImages) {
+            saveCanvas();
+        }
+    }
+
+    function loadImage(layer, src) {
+        if (!src || src.includes("None")) {
+            imagesLoaded++; // Skip empty selections
             if (imagesLoaded === totalImages) {
                 saveCanvas();
             }
+            return;
         }
 
-        function loadImage(layer, src) {
-            if (!src || src.includes("None")) {
-                imagesLoaded++;
-                if (imagesLoaded === totalImages) {
-                    saveCanvas();
-                }
-                return;
-            }
-            const image = new Image();
-            image.crossOrigin = "anonymous";
-            image.src = src;
-            image.onload = () => drawImage(image);
-        }
-
-        function saveCanvas() {
-            const link = document.createElement("a");
-            link.download = "custom_album_cover.png";
-            link.href = canvas.toDataURL("image/png");
-            link.click();
-        }
-
-        layersToLoad.forEach(layer => {
-            const img = document.getElementById(layer.id);
-            if (img && img.src && (layer.required || !img.src.includes("None"))) {
-                loadImage(layer.id, img.src);
-            } else {
-                imagesLoaded++;
-            }
-        });
+        const image = new Image();
+        image.crossOrigin = "anonymous";
+        image.src = src;
+        image.onload = () => drawImage(image);
     }
+
+    function saveCanvas() {
+        const link = document.createElement("a");
+        link.download = "custom_album_cover.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    }
+
+    layersToLoad.forEach(layer => {
+        const img = document.getElementById(layer.id);
+
+        // Only load layers that are required OR that have a selected image
+        if (img && img.src && (layer.required || !img.src.includes("None"))) {
+            loadImage(layer.id, img.src);
+        } else {
+            imagesLoaded++;
+        }
+    });
+}
+
 
     function toggleDarkMode() {
         document.body.classList.toggle("dark-mode");
