@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
         title: ["title1.png", "title2.png", "title3.png"],
         lv: ["None", "lv1.png", "lv2.png"],
         shirt: ["None", "shirt1.png", "shirt2.png"]
-    };
+    }); 
 
     function populateDropdowns() {
         console.log("Populating dropdowns..."); // Debugging check
@@ -166,21 +166,7 @@ function toggleInfoSection() {
         link.click();
     }
 
-layersToLoad.forEach(layer => {
-    const img = document.getElementById(layer.id);
 
-    if (!img) {
-        console.error(`Element with ID '${layer.id}' not found.`);
-        imagesLoaded++;
-        return;
-    }
-
-    if (img.src && (layer.required || !img.src.includes("None"))) {
-        loadImage(layer.id, img.src);
-    } else {
-        imagesLoaded++;
-    }
-});  // ✅ Correctly closed
 
 
 
