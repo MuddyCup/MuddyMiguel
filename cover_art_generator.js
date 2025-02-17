@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function updateLayer(layer, file) {
     const imgElement = document.getElementById(layer);
-    
+
     if (file === "None") {
         imgElement.style.display = "none"; // Hide if "None" is selected
     } else {
@@ -51,9 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
         imgElement.style.height = "auto";
         imgElement.style.maxWidth = "2000px";
         imgElement.style.maxHeight = "2000px";
-        imgElement.style.position = "absolute";
-        imgElement.style.left = "0px"; // Aligns images to top-left
-        imgElement.style.top = "0px";
     }
 }
 
