@@ -1,68 +1,69 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const layers = {
-        background: ["bg1.png", "bg2.png"],
-        miguel: ["miguel1.png", "miguel2.png"],
-        title: ["title1.png", "title2.png"],
-        lv: ["lv1.png", "lv2.png"],
-        shirt: ["shirt1.png", "shirt2.png"]
+    // Define available options for each layer
+    const layerOptions = {
+        background: ["bg1.png", "bg2.png", "bg3.png"], // Add your background images here
+        miguel: ["miguel1.png", "miguel2.png"],       // Add your miguel images here
+        title: ["title1.png", "title2.png"],          // Add your title images here
+        lv: ["lv1.png", "lv2.png"],                  // Add your lv images here
+        shirt: ["shirt1.png", "shirt2.png"]           // Add your shirt images here
     };
 
+    // Function to populate dropdowns
     function populateDropdowns() {
-        Object.keys(layers).forEach(layer => {
+        for (const [layer, options] of Object.entries(layerOptions)) {
             const selectElement = document.getElementById(`${layer}Select`);
-            layers[layer].forEach(file => {
-                let option = document.createElement("option");
-                option.value = file;
-                option.textContent = file;
-                selectElement.appendChild(option);
+            options.forEach(option => {
+                const opt = document.createElement("option");
+                opt.value = option;
+                opt.textContent = option;
+                selectElement.appendChild(opt);
             });
+            // Set event listener for change
             selectElement.addEventListener("change", () => updateLayer(layer, selectElement.value));
-        });
+        }
     }
 
-    function updateLayer(layer, file) {
-        document.getElementById(layer).src = `assets/${layer}/${file}`;
+    // Function to update the image layer
+    function updateLayer(layer, filename) {
+        const imgElement = document.getElementById(layer);
+        imgElement.src = `assets/${layer}/${filename}`;
     }
 
+    // Function to download the composed image
     function downloadImage() {
         const canvas = document.createElement("canvas");
         canvas.width = 500;
         canvas.height = 500;
         const ctx = canvas.getContext("2d");
 
-        let images = [];
-        let loadedImages = 0;
+        const images = [];
+        let imagesLoaded = 0;
 
-        function drawImage(img, callback) {
-            const image = new Image();
-            image.crossOrigin = "anonymous";
-            image.src = img.src;
-            image.onload = () => {
-                ctx.drawImage(image, 0, 0, 500, 500);
-                callback();
+        // Load images
+        for (const layer of Object.keys(layerOptions)) {
+            const img = new Image();
+            img.src = document.getElementById(layer).src;
+            img.onload = () => {
+                imagesLoaded++;
+                if (imagesLoaded === Object.keys(layerOptions).length) {
+                    // Draw images in order
+                    for (const image of images) {
+                        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+                    }
+                    // Trigger download
+                    const link = document.createElement("a");
+                    link.download = "custom_cover_art.png";
+                    link.href = canvas.toDataURL("image/png");
+                    link.click();
+                }
             };
+            images.push(img);
         }
-
-        function checkCompletion() {
-            loadedImages++;
-            if (loadedImages === layers.length) {
-                const link = document.createElement("a");
-                link.download = "custom_album_cover.png";
-                link.href = canvas.toDataURL("image/png");
-                link.click();
-            }
-        }
-
-        Object.keys(layers).forEach(layer => {
-            const img = document.getElementById(layer);
-            if (img.src && img.src !== window.location.href) {
-                drawImage(img, checkCompletion);
-            } else {
-                loadedImages++;
-            }
-        });
     }
 
+    // Attach download function to button
     document.getElementById("downloadButton").addEventListener("click", downloadImage);
+
+    // Initialize dropdowns
     populateDropdowns();
 });
