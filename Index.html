@@ -110,6 +110,10 @@
             border-color: #fff;
         }
     </style>
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tanboymiguel - palabreo god | Cover Art Studio</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>tanboymiguel - palabreo god | Cover Art Studio</h1>
@@ -169,5 +173,29 @@
         }
     </script>
     <script src="cover_art_generator.js"></script>
+    <!-- Cover Art Display -->
+<div class="canvas-container">
+    <img id="background" class="layer">
+    <img id="miguel" class="layer">
+    <img id="title" class="layer">
+    <img id="lv" class="layer">
+    <img id="shirt" class="layer">
+</div>
+
+<!-- Selections Panel -->
+<div class="panel">
+    <h3>Selections</h3>
+    <label>Background: <select id="backgroundSelect"></select></label>
+    <label>Miguel: <select id="miguelSelect"></select></label>
+    <label>Title: <select id="titleSelect"></select></label>
+    <label>Lv: <select id="lvSelect"></select></label>
+    <label>Shirt: <select id="shirtSelect"></select></label>
+</div>
+
+<!-- Download Button -->
+<button id="downloadButton">Download</button>
+
+<!-- Link JavaScript File -->
+<script src="cover_art_generator.js"></script>
 </body>
 </html>
