@@ -151,6 +151,9 @@ function downloadImage() {
     }
 
     function shuffleSelection() {
+    console.log("Resetting before shuffling...");
+    resetSelections(); // 🔹 First, reset everything before shuffling
+
     console.log("Shuffling selections...");
     
     Object.keys(layers).forEach(layer => {
@@ -169,6 +172,7 @@ function downloadImage() {
     // 🔹 Force a full canvas update after shuffling
     setTimeout(updateCanvas, 200);
 }
+
 
     function detectDevice() {
         const userAgent = navigator.userAgent.toLowerCase();
