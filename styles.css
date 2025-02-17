@@ -224,9 +224,9 @@ button:hover {
     color: #fff;
 }
 .download-btn {
-    margin-bottom: 20px; /* Adds space below the Download button */
+    margin-bottom: 5px; /* Adds space below the Download button */
 }
 
 #toggleMusicButton {
-    margin-top: 10px; /* Adds space above the Music button */
+    margin-top: 5px; /* Adds space above the Music button */
 }
