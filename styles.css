@@ -69,12 +69,10 @@ body {
 
 /* Dropdown Styling */
 select {
-    width: 100%;
-    padding: 5px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid black;
-    cursor: pointer;
+    display: block !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow-y: visible !important;
 }
 
 /* Button Styling */
