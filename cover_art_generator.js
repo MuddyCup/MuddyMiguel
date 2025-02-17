@@ -40,20 +40,19 @@ document.addEventListener("DOMContentLoaded", function () {
     
 
  function updateLayer(layer, file) {
-        const imgElement = document.getElementById(layer);
-        if (file === "None") {
-            imgElement.style.display = "none";
-        } else {
-            imgElement.style.display = "block";
-            imgElement.src = `assets/${layer}/${file}`;
-            imgElement.style.width = "2000px";
-            imgElement.style.height = "2000px";
-            imgElement.style.position = "absolute";
-            imgElement.style.top = "50%";
-            imgElement.style.left = "50%";
-            imgElement.style.transform = "translate(-50%, -50%)";
-        }
+    const imgElement = document.getElementById(layer);
+    if (file === "None") {
+        imgElement.style.display = "none";
+    } else {
+        imgElement.style.display = "block";
+        imgElement.src = `assets/${layer}/${file}`;
+        imgElement.style.position = "absolute";
+        imgElement.style.top = "0px";
+        imgElement.style.left = "0px";
+        imgElement.style.width = "auto";  // Ensures original width is used
+        imgElement.style.height = "auto"; // Ensures original height is used
     }
+}
 
 
     function drawImage(img, callback) {
