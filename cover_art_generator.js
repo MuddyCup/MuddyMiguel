@@ -116,7 +116,7 @@ function toggleInfoSection() {
         });
     }
 
-   function downloadImage() {
+  function downloadImage() {
     console.log("Downloading image...");
 
     const canvas = document.createElement("canvas");
@@ -124,12 +124,19 @@ function toggleInfoSection() {
     canvas.height = 2000;
     const ctx = canvas.getContext("2d");
 
-    const layersToLoad = ["background", "miguel", "title", "lv", "shirt"]; // Ordered from bottom to top
-    let imagesLoaded = 0;
-    let totalImages = 0;
-    const imageElements = [];
+    // Correct order: Background -> Miguel -> Title -> LV -> Shirt
+    const layersToLoad = [
+        { id: "background", required: true },
+        { id: "miguel", required: true },
+        { id: "title", required: true },
+        { id: "lv", required: false },
+        { id: "shirt", required: false }
+    ];
 
-    function drawImage(image, layerIndex) {
+    let imagesLoaded = 0;
+    let totalImages = layersToLoad.length;
+
+    function drawImage(image, callback) {
         ctx.drawImage(image, 0, 0, 2000, 2000);
         imagesLoaded++;
         if (imagesLoaded === totalImages) {
@@ -137,7 +144,7 @@ function toggleInfoSection() {
         }
     }
 
-    function loadImage(layer, src, layerIndex) {
+    function loadImage(layer, src) {
         if (!src || src.includes("None")) {
             imagesLoaded++; // Skip empty selections
             if (imagesLoaded === totalImages) {
@@ -145,12 +152,11 @@ function toggleInfoSection() {
             }
             return;
         }
-        
+
         const image = new Image();
         image.crossOrigin = "anonymous";
         image.src = src;
-        image.onload = () => drawImage(image, layerIndex);
-        imageElements.push(image);
+        image.onload = () => drawImage(image);
     }
 
     function saveCanvas() {
@@ -160,13 +166,16 @@ function toggleInfoSection() {
         link.click();
     }
 
-    // Count valid images to load
-    layersToLoad.forEach(layer => {
-        const img = document.getElementById(layer);
-        if (img && img.src && !img.src.includes("None")) {
-            totalImages++;
+    layersToLoad.forEach(({ id, required }) => {
+        const img = document.getElementById(id);
+        if (img && img.src && (required || !img.src.includes("None"))) {
+            loadImage(id, img.src);
+        } else {
+            imagesLoaded++;
         }
     });
+}
+
 
     // Load each image in order
     layersToLoad.forEach((layer, index) => {
