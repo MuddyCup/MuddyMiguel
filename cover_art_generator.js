@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-   function downloadImage() {
+ function downloadImage() {
     console.log("Downloading image...");
 
     const canvas = document.createElement("canvas");
@@ -57,19 +57,19 @@ document.addEventListener("DOMContentLoaded", function () {
     canvas.height = 2000;
     const ctx = canvas.getContext("2d");
 
-    // Layer order: Background → Miguel → Title → LV (if selected) → Shirt (if selected)
+    // Reverse order: Shirt → LV → Title → Miguel → Background
     const layersToLoad = [
-        { id: "background", required: true },
-        { id: "miguel", required: true },
-        { id: "title", required: true },
-        { id: "lv", required: false }, // Optional layer
-        { id: "shirt", required: false } // Optional layer
+        { id: "shirt", required: false }, // Shirt on top
+        { id: "lv", required: false },    // LV below Shirt
+        { id: "title", required: true },  // Title below LV
+        { id: "miguel", required: true }, // Miguel below Title
+        { id: "background", required: true } // Background at the bottom
     ];
 
     let imagesLoaded = 0;
     let totalImages = layersToLoad.length;
 
-    function drawImage(image, callback) {
+    function drawImage(image) {
         ctx.drawImage(image, 0, 0, 2000, 2000);
         imagesLoaded++;
         if (imagesLoaded === totalImages) {
@@ -101,8 +101,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     layersToLoad.forEach(layer => {
         const img = document.getElementById(layer.id);
-
-        // Only load layers that are required OR that have a selected image
         if (img && img.src && (layer.required || !img.src.includes("None"))) {
             loadImage(layer.id, img.src);
         } else {
@@ -110,6 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 }
+
 
 
     function toggleDarkMode() {
