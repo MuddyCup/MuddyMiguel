@@ -7,24 +7,34 @@ document.addEventListener("DOMContentLoaded", function () {
         shirt: ["None", "shirt1.png", "shirt2.png", "shirt3.png", "shirt4.png", "shirt5.png", "shirt6.png", "shirt7.png", "shirt8.png", "shirt9.png", "shirt10.png"]
     };
 
-    function populateDropdowns() {
-        console.log("Populating dropdowns..."); // Check if function runs
+   function populateDropdowns() {
+    console.log("Populating dropdowns..."); // Debugging check
 
-        Object.keys(layers).forEach(layer => {
-            const selectElement = document.getElementById(`${layer}Select`);
-            if (!selectElement) {
-                console.error(`Dropdown not found for layer: ${layer}`);
-                return;
-            }
-            console.log(`Adding options to: ${layer}`);
-            layers[layer].forEach(file => {
-                let option = document.createElement("option");
-                option.value = file;
-                option.textContent = file;
-                selectElement.appendChild(option);
-            });
-            selectElement.addEventListener("change", () => updateLayer(layer, selectElement.value));
+    Object.keys(layers).forEach(layer => {
+        const selectElement = document.getElementById(`${layer}Select`);
+
+        if (!selectElement) {
+            console.error(`Dropdown not found for layer: ${layer}`);
+            return;
+        }
+
+        console.log(`Adding options to: ${layer}`); // Debugging check
+
+        layers[layer].forEach(file => {
+            let option = document.createElement("option");
+            option.value = file;
+            option.textContent = file;
+            selectElement.appendChild(option);
         });
+
+        selectElement.addEventListener("change", () => updateLayer(layer, selectElement.value));
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    populateDropdowns();
+});
+
     }
 
     function updateLayer(layer, file) {
