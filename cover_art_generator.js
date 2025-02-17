@@ -40,9 +40,20 @@ document.addEventListener("DOMContentLoaded", function () {
     
 
     function updateLayer(layer, file) {
-        const imgElement = document.getElementById(layer);
-        imgElement.src = file === "None" ? "" : `assets/${layer}/${file}`;
+    const imgElement = document.getElementById(layer);
+    
+    if (file === "None") {
+        imgElement.style.display = "none"; // Hide if "None" is selected
+    } else {
+        imgElement.style.display = "block";
+        imgElement.src = `assets/${layer}/${file}`;
+        imgElement.style.width = "2000px"; 
+        imgElement.style.height = "2000px";
+        imgElement.style.left = "0";
+        imgElement.style.top = "0";
     }
+}
+
 
     function downloadImage() {
         const canvas = document.createElement("canvas");
