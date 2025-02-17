@@ -45,13 +45,14 @@ body {
 
 .layer {
     position: absolute;
-    width: auto; /* Keep original image size */
+    width: auto; /* Prevents forced scaling */
     height: auto;
-    max-width: 2000px;
+    max-width: 2000px; /* Ensures images don't grow larger than 2000px */
     max-height: 2000px;
-    object-fit: contain; /* Prevents distortion */
-    object-position: top left; /* Makes sure elements don't center */
+    object-fit: none; /* Ensures images retain their original dimensions */
+    object-position: top left; /* Align images to top-left instead of centering */
 }
+
 
 
 /* Panel Styling */
