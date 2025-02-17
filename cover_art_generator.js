@@ -187,12 +187,12 @@ function applyLayout() {
     if (deviceType === "Mobile") {
         container.classList.add("mobile-layout"); // Apply vertical layout
 
-        // 🔹 Make sure the canvas resizes dynamically
+        // 🔹 Ensure the canvas scales correctly on mobile
         canvas.style.width = "90vw";
-        canvas.style.height = "90vw";
-        canvas.style.maxWidth = "500px";
-        canvas.style.maxHeight = "500px";
-
+        canvas.style.height = "auto"; // Maintain aspect ratio
+        canvas.style.maxWidth = "100%";
+        canvas.style.maxHeight = "90vw";
+        canvas.style.marginTop = "10px"; // Prevents it from starting halfway down
     } else {
         container.classList.remove("mobile-layout"); // Keep desktop layout
 
