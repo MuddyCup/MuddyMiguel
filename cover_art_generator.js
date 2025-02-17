@@ -157,12 +157,44 @@ function toggleInfoSection() {
 
     applyDarkModePreference();
 
-    setTimeout(() => {
-        populateDropdowns();
-        document.getElementById("downloadButton").addEventListener("click", downloadImage);
-        document.getElementById("shuffleButton").addEventListener("click", shuffleSelection);
-        document.getElementById("resetButton").addEventListener("click", resetSelections);
-        document.getElementById("darkModeToggle").addEventListener("click", toggleDarkMode);
-        document.getElementById("infoButton").addEventListener("click", toggleInfoSection);
-    }, 100);
-});
+   function detectDevice() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    return /mobile|android|iphone|ipad|tablet/.test(userAgent) ? "Mobile" : "Desktop";
+}
+
+function updateDeviceUI() {
+    const deviceTypeElement = document.getElementById("deviceType");
+    const switchButton = document.getElementById("switchDeviceButton");
+
+    const currentDevice = detectDevice();
+    deviceTypeElement.textContent = `Current Device: ${currentDevice}`;
+    switchButton.textContent = currentDevice === "Desktop" ? "Switch to Mobile" : "Switch to Desktop";
+}
+
+function toggleDeviceMode() {
+    const deviceTypeElement = document.getElementById("deviceType");
+    const switchButton = document.getElementById("switchDeviceButton");
+
+    if (switchButton.textContent.includes("Mobile")) {
+        switchButton.textContent = "Switch to Desktop";
+        deviceTypeElement.textContent = "Current Device: Mobile";
+    } else {
+        switchButton.textContent = "Switch to Mobile";
+        deviceTypeElement.textContent = "Current Device: Desktop";
+    }
+
+    alert("Refreshing the page to simulate a real mode switch.");
+    location.reload(); // Simulating a mode switch by refreshing
+}
+
+setTimeout(() => {
+    populateDropdowns();
+    document.getElementById("downloadButton").addEventListener("click", downloadImage);
+    document.getElementById("shuffleButton").addEventListener("click", shuffleSelection);
+    document.getElementById("resetButton").addEventListener("click", resetSelections);
+    document.getElementById("darkModeToggle").addEventListener("click", toggleDarkMode);
+    document.getElementById("infoButton").addEventListener("click", toggleInfoSection);
+    document.getElementById("switchDeviceButton").addEventListener("click", toggleDeviceMode);
+
+    updateDeviceUI(); // Initialize device UI detection
+}, 100);
