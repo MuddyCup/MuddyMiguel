@@ -144,20 +144,24 @@ function downloadImage() {
     }
 
     function shuffleSelection() {
-        console.log("Shuffling selections...");
-        Object.keys(layers).forEach(layer => {
-            const selectElement = document.getElementById(`${layer}Select`);
-            if (!selectElement) return;
-            
-            let availableOptions = layers[layer];
-            if (layer === "lv" || layer === "shirt") {
-                selectElement.value = availableOptions[Math.floor(Math.random() * availableOptions.length)];
-            } else {
-                selectElement.value = availableOptions[Math.floor(Math.random() * (availableOptions.length - 1)) + 1];
-            }
-            updateLayer(layer, selectElement.value);
-        });
-    }
+    console.log("Shuffling selections...");
+    
+    Object.keys(layers).forEach(layer => {
+        const selectElement = document.getElementById(`${layer}Select`);
+        if (!selectElement) return;
+
+        let availableOptions = layers[layer];
+        if (layer === "lv" || layer === "shirt") {
+            selectElement.value = availableOptions[Math.floor(Math.random() * availableOptions.length)];
+        } else {
+            selectElement.value = availableOptions[Math.floor(Math.random() * (availableOptions.length - 1)) + 1];
+        }
+        updateLayer(layer, selectElement.value);
+    });
+
+    // 🔹 Force a full canvas update after shuffling
+    setTimeout(updateCanvas, 200);
+}
 
     function detectDevice() {
         const userAgent = navigator.userAgent.toLowerCase();
