@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     
 
-    function updateLayer(layer, file) {
+   function updateLayer(layer, file) {
     const imgElement = document.getElementById(layer);
 
     if (file === "None") {
@@ -47,11 +47,42 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
         imgElement.style.display = "block";
         imgElement.src = `assets/${layer}/${file}`;
-        imgElement.style.width = "2000px";
-        imgElement.style.height = "2000px";
         imgElement.style.position = "absolute";
-        imgElement.style.top = "0px";
-        imgElement.style.left = "0px";
+
+        // Apply correct dimensions for each layer type
+        if (layer === "background") {
+            imgElement.style.width = "2000px";
+            imgElement.style.height = "2000px";
+            imgElement.style.top = "0px";
+            imgElement.style.left = "0px";
+        } else if (layer === "lv") {
+            imgElement.style.width = "181px";
+            imgElement.style.height = "170px";
+            imgElement.style.top = "50px"; // Adjust this based on your Photoshop file
+            imgElement.style.left = "100px"; // Adjust this based on your Photoshop file
+        } else if (layer === "miguel") {
+            imgElement.style.width = "964px";
+            imgElement.style.height = "1939px";
+            imgElement.style.top = "30px";
+            imgElement.style.left = "500px";
+        } else if (layer === "shirt") {
+            imgElement.style.width = "600px";
+            imgElement.style.height = "817px";
+            imgElement.style.top = "1000px";
+            imgElement.style.left = "700px";
+        } else if (layer === "title") {
+            imgElement.style.width = "1182px"; // Default to title1 size
+            imgElement.style.height = "426px";
+            imgElement.style.top = "100px";
+            imgElement.style.left = "300px";
+
+            // Adjust based on specific title file
+            if (file.includes("title2")) {
+                imgElement.style.height = "556px";
+            } else if (file.includes("title3")) {
+                imgElement.style.height = "386px";
+            }
+        }
     }
 }
 
