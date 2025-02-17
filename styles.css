@@ -150,11 +150,13 @@ button:hover {
     border: none;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: 200px;
+    width: 100%;
     text-align: center;
     font-size: 16px;
     border-radius: 5px;
+    display: block;  /* Ensures it stays in its own row */
 }
+
 
 #shuffleButton:hover {
     background-color: #444;
